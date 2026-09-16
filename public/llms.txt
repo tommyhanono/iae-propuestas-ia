@@ -1,0 +1,9 @@
+# IA en el IAE · Dos propuestas
+
+> Presentación web interactiva para la coordinación académica del Instituto Alberto Einstein (Panamá). Presenta Thomas Hanono, 11vo grado.
+
+## Propuesta 1 · Builders Club
+Club gratuito para 9no a 11vo (~1 sesión por semana, desde octubre de 2026) donde se construyen productos reales con IA que benefician al colegio. Pide apoyo para una cuenta de Claude por estudiante (Gemini como plan B). Plan de 6 clases: fundamentos, segundo cerebro (Obsidian), modelos y superficies, MCPs, prompting de construcción y Demo Day. Reglas de uso habladas con los miembros.
+
+## Propuesta 2 · Currículo 8–10
+Progresión de tres años: 8vo lee la estructura (la IA interroga al alumno sobre un Excel real), 9no aprende a pedir con prompts estructurados, 10mo crea productos propios para su portafolio. El currículo da la base a todos; el club lleva más lejos a quien quiera.

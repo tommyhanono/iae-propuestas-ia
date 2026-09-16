@@ -126,7 +126,7 @@ export default function App() {
         data-camera-settled={settled ? 'true' : 'false'}
         data-area={area}
       >
-        <h1 className="sr-only">IA en el IAE: Builders Club y Currículo de 8vo a 10mo</h1>
+        <h1 className="sr-only">IA en el IAE · Dos propuestas: Builders Club y Currículo 8–10</h1>
         {mobile ? (
           <MobileDeck index={index} notesOpen={notesOpen} onNext={next} onPrev={prev} onSettled={setSettled} />
         ) : (

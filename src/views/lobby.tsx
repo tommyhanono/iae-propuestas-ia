@@ -63,9 +63,9 @@ export function Lobby() {
           <span className="eyebrow">Coordinación académica · Instituto Alberto Einstein · 2026</span>
         </R>
         <R>
-          <h1 className="mt-3 font-display font-semibold leading-[1] tracking-tight text-[36px] @4xl:mt-4 @4xl:text-[84px]" style={{ fontVariationSettings: '"opsz" 144' }}>
+          <h2 className="mt-3 font-display font-semibold leading-[1] tracking-tight text-[36px] @4xl:mt-4 @4xl:text-[84px]" style={{ fontVariationSettings: '"opsz" 144' }}>
             Construir con IA, <span className="italic text-silver/80">no copiar con IA.</span>
-          </h1>
+          </h2>
         </R>
         <R><p className="h-sub mx-auto mt-3 max-w-[60ch] text-balance text-muted @4xl:mt-4">Dos propuestas para el IAE que se complementan. Elige una puerta.</p></R>
       </G>

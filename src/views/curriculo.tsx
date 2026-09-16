@@ -239,13 +239,15 @@ export function CU4() {
   return (
     <div className="flex h-full flex-col">
       <Header i={12} sub="Cierran el aprendizaje con algo que alguien usa" />
-      <G className="grid grid-cols-1 gap-3 @2xl:grid-cols-3 @4xl:gap-4">
-        {[['Excels propios', 'grid'], ['Herramientas', 'hammer'], ['Sistemas para clubes', 'people']].map(([t, ic]) => (
-          <R key={t} className="panel flex items-center gap-3 px-4 py-3 @4xl:px-5 @4xl:py-4">
-            <Svg name={ic as 'grid'} className="flex-none text-acc" />
-            <span className="body font-medium text-paper">{t}</span>
-          </R>
-        ))}
+      <G>
+        <R className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <span className="label">Qué crean</span>
+          {['Excels propios', 'Herramientas', 'Sistemas para clubes'].map((t, k) => (
+            <span key={t} className="body flex items-center gap-3 font-medium text-paper">
+              {k > 0 && <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-acc" />}{t}
+            </span>
+          ))}
+        </R>
       </G>
       <G className="mt-4 flex min-h-0 flex-1 flex-col @4xl:mt-6">
         <R className="panel flex flex-1 flex-col p-4 @4xl:p-6">

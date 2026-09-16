@@ -104,8 +104,6 @@ export default function Board({ index, map, notesOpen, onEnter, onSettled, onAre
   const transform = useTransform([fx, fy, s, rot, acx, acy] as MotionValue<number>[], ([x, y, k, r, cx, cy]: number[]) =>
     `translate3d(${cx}px, ${cy}px, 0) rotate(${r}deg) scale(${k}) translate3d(${-x}px, ${-y}px, 0)`)
   const filter = useTransform(blur, (b) => (b > 0.05 ? `blur(${b}px)` : 'none'))
-  const glowX = useTransform(fx, (v) => v * -0.006)
-  const glowY = useTransform(fy, (v) => v * -0.006)
 
   const [phases, setPhases] = useState<NodePhase[]>(() => NODES.map((_, i) => (i === index ? 'incoming' : 'idle')))
   const [flying, setFlying] = useState(false)
@@ -375,11 +373,11 @@ export default function Board({ index, map, notesOpen, onEnter, onSettled, onAre
   return (
     <>
       <div className="canvas-bg" aria-hidden>
-        <motion.div className="absolute inset-0" style={reduced ? undefined : { x: glowX, y: glowY }}>
+        <div className="absolute inset-0 overflow-hidden">
           <div className="glow gold" />
           <div className="glow cian" />
           <div className="glow silver" />
-        </motion.div>
+        </div>
         <div className="grain" />
         <div className="vignette" />
       </div>

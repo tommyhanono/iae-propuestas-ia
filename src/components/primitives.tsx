@@ -126,7 +126,7 @@ export function Svg({ name, size = 22, className = '', stroke = 1.8 }: { name: I
 
 export function IconBadge({ name, className = '' }: { name: IconName; className?: string }) {
   return (
-    <span className={`flex h-11 w-11 @4xl:h-14 @4xl:w-14 flex-none items-center justify-center rounded-full panel-acc panel text-acc ${className}`} aria-hidden>
+    <span className={`flex h-11 w-11 @4xl:h-14 @4xl:w-14 flex-none items-center justify-center !rounded-[50%] panel-acc panel text-acc ${className}`} aria-hidden>
       <Svg name={name} size={24} />
     </span>
   )

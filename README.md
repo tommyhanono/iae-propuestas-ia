@@ -11,7 +11,7 @@ Presentación web interactiva para la **coordinación académica del Instituto A
 
 - Repo: https://github.com/tommyhanono/iae-propuestas-ia
 - Se despliega por CLI desde esta carpeta: `vercel --prod`.
-- `vercel.json` fija `framework: vite` y el rewrite SPA, así que refrescar con cualquier `#hash` abre ese nodo.
+- `vercel.json` fija `framework: vite`. La navegación va por `#hash`, así que refrescar con cualquier `#hash` abre ese nodo; una ruta inexistente da la 404 propia (`public/404.html`).
 
 ## Cómo se navega
 

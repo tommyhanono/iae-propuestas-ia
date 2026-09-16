@@ -276,6 +276,11 @@ test.describe('desktop 1440x900', () => {
     expect(all).not.toMatch(/vos |tenés|podés|querés/)
     expect(await page.title()).toContain('IA en el IAE')
     expect((await request.get('/favicon.svg')).status()).toBe(200)
+    expect((await request.get('/og.png')).headers()['content-type']).toContain('image/png')
+    const notFound = await request.get('/una-ruta-que-no-existe')
+    expect(notFound.status()).toBe(404)
+    expect(await notFound.text()).toContain('Volver al lobby')
+    expect(await page.locator('h1').count()).toBe(1)
   })
 
   test('foco de teclado visible', async ({ page }) => {

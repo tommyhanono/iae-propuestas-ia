@@ -44,12 +44,21 @@ test.describe('desktop 1440x900', () => {
     const errors = watchErrors(page)
     await open(page, 'lobby')
     // A mitad del vuelo por el portal hay velo del color del mundo.
+    // Registra el máximo del velo dentro de la página, cuadro por cuadro.
+    await page.evaluate(() => {
+      const w = window as unknown as { __veilMax: number }
+      w.__veilMax = 0
+      const t0 = performance.now()
+      const tick = () => {
+        const v = [...document.querySelectorAll<HTMLElement>('div.fixed.inset-0.z-10')].pop()
+        if (v) w.__veilMax = Math.max(w.__veilMax, Number(getComputedStyle(v).opacity))
+        if (performance.now() - t0 < 3000) requestAnimationFrame(tick)
+      }
+      requestAnimationFrame(tick)
+    })
     await page.click('[data-portal="cu"]')
-    let midVeil = 0
-    for (let k = 0; k < 40 && midVeil < 0.9; k++) {
-      await page.waitForTimeout(50)
-      midVeil = Math.max(midVeil, await page.evaluate(() => Number(getComputedStyle([...document.querySelectorAll<HTMLElement>('div.fixed.inset-0.z-10')].pop()!).opacity)))
-    }
+    await page.waitForTimeout(2200)
+    const midVeil = await page.evaluate(() => (window as unknown as { __veilMax: number }).__veilMax)
     expect(midVeil).toBeGreaterThan(0.5)
     await waitSettled(page, 'cu-1'); await page.waitForTimeout(REVEAL_MS)
     await assertNode(page, 'cu-1', 'portal cu')

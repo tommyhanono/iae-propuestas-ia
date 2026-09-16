@@ -233,7 +233,7 @@ export default function Board({ index, map, notesOpen, onEnter, onSettled, onAre
       go(fx, [fx0, p.x, ov.fx, ov.fx, t.fx], { duration: dur, times, ease: ['easeIn', 'linear', 'easeOut', [0.3, 0, 0.1, 1]] })
       go(fy, [fy0, p.y, ov.fy, ov.fy, t.fy], { duration: dur, times, ease: ['easeIn', 'linear', 'easeOut', [0.3, 0, 0.1, 1]] })
       go(s, [s0, s0 * 3.4, ov.s * 0.8, ov.s, t.s], { duration: dur, times, ease: [[0.5, 0, 0.9, 0.6], 'linear', 'easeOut', [0.3, 0, 0.1, 1]] })
-      go(veil, [0, 0, 1, 1, 0, 0], { duration: dur, times: [0, 0.16, 0.33, 0.38, 0.56, 1], ease: 'easeInOut' })
+      go(veil, [0, 0, 1, 1, 0, 0], { duration: dur, times: [0, 0.14, 0.3, 0.42, 0.58, 1], ease: 'easeInOut' })
       go(blur, [0, 0, 5, 0, 0], { duration: dur, times: [0, 0.18, 0.33, 0.4, 1] })
     } else if (toW === 'lobby' && fromW !== 'lobby') {
       // ——— Regreso: alejarse hasta ver la constelación y volar al lobby con rebote suave ———

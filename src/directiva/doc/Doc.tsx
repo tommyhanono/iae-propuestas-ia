@@ -1,5 +1,5 @@
 import { SOURCES } from '../content'
-import { CLUB, ENCARGOS, ENSENAR, FORMACION, GRADES, IMPLEMENTACION, MARCO, METRICAS, NIVELES, PORTAFOLIO, type Grade } from '../curriculo'
+import { ACCESO, CLUB, ENCARGOS, ENSENAR, FORMACION, GRADES, IMPLEMENTACION, MARCO, METRICAS, NIVELES, PORTAFOLIO, PREGUNTAS, type Grade } from '../curriculo'
 
 const TOC = [
   { id: 'resumen', t: 'Resumen' },
@@ -11,8 +11,10 @@ const TOC = [
   { id: 'formacion', t: 'Formación docente' },
   { id: 'club', t: 'Builders Club' },
   { id: 'encargos', t: 'Banco de encargos' },
+  { id: 'acceso', t: 'Arranca el primer día' },
   { id: 'garantias', t: 'Garantías' },
-  { id: 'implementacion', t: 'Implementación y métricas' },
+  { id: 'implementacion', t: 'Implementación y metas' },
+  { id: 'preguntas', t: 'Preguntas frecuentes' },
   { id: 'fuentes', t: 'Fuentes' },
 ]
 
@@ -120,7 +122,7 @@ export default function Doc() {
           <p className="eyebrow">Propuesta para la directiva del IAE · documento completo</p>
           <h1>Currículo de IA de 8.º a 10.º y Builders Club</h1>
           <p className="lead">{MARCO.resumen}</p>
-          <p className="by">Presenta Thomas Hanono, candidato a presidente del Builders Club · <a href="/directiva/">Ver la presentación</a></p>
+          <p className="by">Presenta Thomas Hanono, candidato a presidente del Builders Club · <a href="/directiva/">Ver la presentación</a> · <a href="/directiva/resumen/">Resumen de una página</a></p>
         </div>
       </header>
 
@@ -255,6 +257,18 @@ export default function Doc() {
             <p className="note">{ENCARGOS.como}</p>
           </section>
 
+          <section id="acceso" aria-labelledby="h-acceso">
+            <h2 id="h-acceso">Arranca el primer día, sin esperar cuentas para los alumnos</h2>
+            <p className="lead">{ACCESO.idea}</p>
+            {ACCESO.niveles.map((n) => (
+              <div key={n.nombre} className="unit">
+                <div className="unit-head"><h4>{n.nombre}</h4></div>
+                <ul className="checks">{n.items.map((it) => <li key={it}>{it}</li>)}</ul>
+              </div>
+            ))}
+            <p className="note">Las cuentas personales de Anthropic son para mayores de 18 años; por eso el nivel 1 no usa cuentas de alumnos. La herramienta del nivel 2 se elige con la coordinación según los términos de cada proveedor para la edad de cada grupo.</p>
+          </section>
+
           <section id="garantias" aria-labelledby="h-garantias">
             <h2 id="h-garantias">Garantías: integridad, supervisión y datos</h2>
             <KV items={[
@@ -274,7 +288,7 @@ export default function Doc() {
                 {IMPLEMENTACION.map((r) => <tr key={r.cuando}><th scope="row">{r.cuando}</th><td>{r.que}</td><td>{r.quien}</td></tr>)}
               </tbody>
             </table>
-            <h3>Cómo sabremos que funciona</h3>
+            <h3>Metas del primer año (propuestas, para ajustar con la coordinación)</h3>
             <KV items={METRICAS} />
             <h3>Lo que pone el colegio y lo que ponemos nosotros</h3>
             <KV items={[
@@ -282,6 +296,11 @@ export default function Doc() {
               { k: 'Nosotros', v: 'El plan de las seis clases y sus materiales, la coordinación del club, alumnos guía preparados, apoyo para las guías de cada unidad e informes al cierre de cada fase.' },
             ]} />
             <p className="note">Las fechas exactas dependen del calendario del IAE y quedan a confirmar.</p>
+          </section>
+
+          <section id="preguntas" aria-labelledby="h-preguntas">
+            <h2 id="h-preguntas">Preguntas frecuentes</h2>
+            <KV items={PREGUNTAS.map((p) => ({ k: p.q, v: p.a }))} />
           </section>
 
           <section id="fuentes" aria-labelledby="h-fuentes">

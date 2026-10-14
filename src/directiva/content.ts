@@ -1,7 +1,7 @@
 // Contenido de la presentación para la directiva: titulares, cuerpo, notas del orador y fuentes.
 // Todo lo que se lee en pantalla vive aquí. scripts/content-check-directiva.mjs lo revisa antes de cada build.
 // El detalle completo del currículo y del club vive en curriculo.ts y se reutiliza en el apéndice.
-import { CLUB, ENCARGOS, ENSENAR, FORMACION, GRADES } from './curriculo.ts'
+import { ACCESO, CLUB, ENCARGOS, ENSENAR, FORMACION, GRADES, PREGUNTAS } from './curriculo.ts'
 
 export type Tone = 'navy' | 'paper'
 
@@ -91,7 +91,7 @@ export type Slide = Base & (
   | { layout: 'evidence'; items: { claim: string; detail: string; source: SourceId }[] }
   | { layout: 'pledges'; items: { label: string; text: string }[]; footnote: string }
   | { layout: 'twoCols'; left: { label: string; items: string[] }; right: { label: string; items: string[] }; footnote: string }
-  | { layout: 'ask'; decisions: string[]; firstStep: { label: string; text: string }; invite: string; presenter: string }
+  | { layout: 'ask'; decisions: string[]; firstStep: { label: string; text: string }; invite: string; qr: { src: string; label: string }; presenter: string }
   | { layout: 'demo'; sheet: { caption: string; columns: string[]; rows: string[][]; focus: [number, number][][]; formula: string[] }; chat: { who: 'ia' | 'alumno'; text: string }[][]; line: string }
   | { layout: 'list'; items: { label: string; text: string }[]; footnote?: string }
   | { layout: 'sources' }
@@ -274,19 +274,29 @@ export const SLIDES: Slide[] = [
     notes: 'La primera pregunta de un colegio es cómo se cuida esto. Integridad: todo se presenta y se explica en vivo; en un club que construye no hay nada que copiar, porque el producto no existe hasta que alguien lo hace. Supervisión: un profesor responsable acompaña, y el acceso es del colegio, con herramientas aptas para la edad de cada grupo. Datos: nada personal en lo que se le pide a la IA, consentimiento de los acudientes y los principios de la Ley 81.',
   },
   {
+    id: 'arranque', section: 'Evidencia y garantías', tone: 'paper', layout: 'twoCols', time: '0:50',
+    title: 'Arranca desde el primer día.',
+    left: { label: ACCESO.niveles[0].nombre, items: ACCESO.niveles[0].items },
+    right: { label: ACCESO.niveles[1].nombre, items: ACCESO.niveles[1].items },
+    footnote: 'Las cuentas personales de Anthropic son para mayores de 18 años: el nivel 1 no usa cuentas de alumnos.',
+    sources: ['anthropic'],
+    notes: 'Una pregunta lógica es con qué herramienta, si los alumnos son menores de edad. La respuesta es que no hay que esperar. En el nivel 1, desde el primer día, el profesor maneja la IA proyectada con su cuenta de adulto: la IA le pregunta al grupo y cada alumno responde en su hoja. Así funciona la clase de 8.º que vieron. Cuando el colegio apruebe una herramienta educativa apta para la edad, pasamos al nivel 2 y cada alumno trabaja con su cuenta del colegio. Esa herramienta la elegimos juntos en las dos semanas de preparación.',
+  },
+  {
     id: 'plan', section: 'Plan y decisión', tone: 'paper', layout: 'table', time: '1:00',
     title: 'En un año, esto es lo que ustedes van a ver.',
-    columns: ['Fase', 'Cuándo', 'Lo que van a ver'],
+    columns: ['Fase', 'Cuándo', 'La meta'],
     rows: [
-      ['Preparación', 'Semanas 1 y 2', 'Profesor responsable nombrado y herramienta elegida.'],
-      ['Builders Club', 'Semanas 3 a 8', 'Un Demo Day con ustedes invitados: cada equipo muestra un producto.'],
-      ['Piloto en 8.º', 'A confirmar', 'Un grupo que explica Excels reales y da sus propias mini-clases.'],
+      ['Preparación', 'Semanas 1 y 2', 'Profesor nombrado y la IA lista en el nivel 1.'],
+      ['Builders Club', 'Semanas 3 a 8', 'Demo Day con al menos 5 productos; 2 pasan a piloto.'],
+      ['Piloto en 8.º', 'A confirmar', '80 % del grupo en Logrado o más, y cada pareja da su mini-clase.'],
       ['Muestra IAE', 'Fin de año', 'Productos de alumnos en uso, presentados a familias y directiva.'],
     ],
     beats: [[0], [1], [2, 3]],
-    footnote: 'Estonia empezó igual en 2025: primero formó a sus docentes y después abrió a los estudiantes.',
+    ownFigures: true,
+    footnote: 'Metas propuestas, para ajustar con la coordinación. Con el informe de cada fase, ustedes deciden si se amplía.',
     sources: ['estonia'],
-    notes: 'Así se ve el año, en semanas y no en fechas, porque depende de cuándo ustedes decidan. Dos semanas de preparación. De la semana 3 a la 8 corre el club, y en la 8 los invito al Demo Day. El piloto del currículo arranca con un grupo de 8.º cuando la coordinación lo vea posible. Y al final del año, una Muestra IAE donde los alumnos presentan a familias y a ustedes las herramientas que construyeron. Es el mismo orden que siguió Estonia en su programa nacional: primero los docentes, después los estudiantes.',
+    notes: 'Así se ve el año, en semanas y no en fechas, porque depende de cuándo ustedes decidan. Y cada fase tiene una meta que se puede comprobar. Dos semanas de preparación. De la semana 3 a la 8 corre el club: la meta es un Demo Day con al menos cinco productos, y que dos pasen a piloto con alguien del colegio. El piloto del currículo arranca con un grupo de 8.º: la meta es que el 80 % llegue a Logrado o más en su proyecto y que cada pareja dé su mini-clase. Y al final del año, una Muestra IAE. Las metas las ajustamos con la coordinación, y con cada informe ustedes deciden si se amplía. Es el mismo orden que siguió Estonia en su programa nacional: primero los docentes, después los estudiantes.',
   },
   {
     id: 'apoyo', section: 'Plan y decisión', tone: 'paper', layout: 'twoCols', time: '0:45',
@@ -308,12 +318,13 @@ export const SLIDES: Slide[] = [
     decisions: [
       'Aprobar el currículo de 8.º a 10.º, empezando con un grupo piloto de 8.º.',
       'Aprobar el Builders Club: seis clases hasta el Demo Day.',
-      'Respaldar el acceso supervisado de los estudiantes a herramientas de IA aptas para su edad.',
+      'Respaldar el acceso a la IA: primero con el profesor, después con una herramienta apta.',
     ],
     firstStep: { label: 'Primer paso, en las próximas dos semanas', text: 'Nombrar un profesor responsable y fijar el horario de la primera clase.' },
     invite: 'Y los invito al Demo Day de la semana 8, para que lo vean con sus propios ojos.',
+    qr: { src: '/qr-curriculo.svg', label: 'El currículo completo, en su celular' },
     presenter: 'Thomas Hanono · Builders Club',
-    notes: 'Cierro con lo que les pido hoy. Tres decisiones: aprobar el currículo empezando con un grupo piloto de 8.º, aprobar el club con sus seis clases y respaldar el acceso supervisado a herramientas aptas para la edad. Un primer paso chico: en dos semanas, nombrar un profesor responsable y fijar el horario. Y una invitación: vengan al Demo Day de la semana 8 y véanlo con sus propios ojos. Dejo esta lámina proyectada mientras conversamos. Quedo a la orden para sus preguntas.',
+    notes: 'Cierro con lo que les pido hoy. Tres decisiones: aprobar el currículo empezando con un grupo piloto de 8.º, aprobar el club con sus seis clases y respaldar el acceso: desde el primer día con el profesor, y después con una herramienta apta para la edad. Un primer paso chico: en dos semanas, nombrar un profesor responsable y fijar el horario. Y una invitación: vengan al Demo Day de la semana 8 y véanlo con sus propios ojos. Con este código abren en su celular el currículo completo, clase por clase. Dejo esta lámina proyectada mientras conversamos. Quedo a la orden para sus preguntas.',
   },
 
   // ——— Apéndice ———
@@ -406,12 +417,7 @@ export const SLIDES: Slide[] = [
   {
     id: 'A12', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
     title: 'Preguntas frecuentes',
-    items: [
-      { label: '¿Cómo sabemos que el aprendizaje es del alumno?', text: 'Porque lo explica y lo enseña: responde las preguntas de la IA, da mini-clases y presenta en vivo cada proyecto.' },
-      { label: '¿Quién acompaña al club?', text: 'Un profesor responsable que nombra el colegio. Las sesiones las preparan y las dan los miembros del club.' },
-      { label: '¿Qué pasa con los trabajos que tienen reglas propias, como AP Research?', text: 'Siguen sus reglas tal cual. El club y el currículo trabajan con productos propios, no con trabajos evaluados externamente.' },
-      { label: '¿Qué hace falta para empezar?', text: 'Un profesor responsable, un horario, un salón y la decisión de hoy. Lo demás se evalúa con el informe de cada fase.' },
-    ],
+    items: PREGUNTAS.map((p) => ({ label: p.q, text: p.a })),
     notes: 'Preguntas que es probable que salgan, con su respuesta corta.',
   },
   {

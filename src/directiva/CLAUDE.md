@@ -1,12 +1,12 @@
 # CLAUDE.md · /directiva/
 
-Presentación **lineal** de 16 láminas + 12 de apéndice para la directiva del IAE, en `/directiva/` (entrada de Vite `directiva/index.html`), y el **documento del currículo completo** en `/directiva/curriculo/` (entrada `directiva/curriculo/index.html`). No comparte código con el tablero de `/`; solo las fuentes, la paleta y `public/brand/`.
+Presentación **lineal** de 18 láminas + 14 de apéndice para la directiva del IAE, en `/directiva/` (entrada de Vite `directiva/index.html`), y el **documento del currículo completo** en `/directiva/curriculo/` (entrada `directiva/curriculo/index.html`). No comparte código con el tablero de `/`; solo las fuentes, la paleta y `public/brand/`.
 
 ## Archivos
 
 - `content.ts`: el texto de las láminas (titulares, cuerpo, notas del orador, tiempos, fuentes).
 - `curriculo.ts`: el currículo completo (90 sesiones, clase tipo, entregables, rúbricas, formación docente) y el club completo (6 clases minuto a minuto, reglas, camino de un producto, implementación y métricas). Lo usan el documento y las láminas de apéndice.
-- `doc/`: el documento `/directiva/curriculo/` (`Doc.tsx`, `doc.css`).
+- `doc/`: el documento `/directiva/curriculo/` (`Doc.tsx`) y el resumen de una página `/directiva/resumen/` (`Resumen.tsx`), con `doc.css` compartido. El QR de la última lámina es `public/qr-curriculo.svg`.
 - `Slides.tsx`: un diseño por `layout` (`cover`, `stat`, `floorCeiling`, `steps`, `table`, `portfolio`, `statement`, `timeline`, `locked`, `evidence`, `pledges`, `twoCols`, `ask`, `list`, `sources`).
 - `App.tsx`: el motor (teclado, toques, hash, beats, índice, notas, temporizador, apéndice, impresión).
 - `directiva.css`: concepto "Plano de obra". Los contrastes medidos están en el comentario de arriba.

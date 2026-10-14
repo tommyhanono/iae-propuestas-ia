@@ -1,5 +1,30 @@
 # Reporte final · presentación para la directiva
 
+## Cuarta vuelta (14-oct-2026): cerrar los huecos de lógica
+
+**Leí la propuesta como la va a leer la directiva y respondí en la presentación las cuatro preguntas que seguramente harán:**
+
+1. **"¿Con qué herramienta, si los alumnos son menores?"** Lámina 15, "Arranca desde el primer día":
+   - Nivel 1, desde el primer día: el profesor maneja la IA proyectada y el grupo responde.
+   - Nivel 2: cuando el colegio aprueba una herramienta apta para la edad, cada alumno usa una cuenta del colegio.
+   
+   Ya no hay que esperar licencias para arrancar.
+2. **"¿Cómo sabremos que funcionó?"** El plan tiene metas medibles: Demo Day con al menos 5 productos y 2 a piloto, y el 80 % del grupo piloto en Logrado o más. Con cada informe, ellos deciden si se amplía.
+3. **"¿La IA reemplaza al profesor? ¿Cuánto tiempo les pide?"** Respondido en las preguntas frecuentes del apéndice y del documento.
+4. **"¿Qué nos llevamos?"**
+   - Un QR en la lámina de cierre que abre el currículo completo en el celular (verificado).
+   - Un resumen de una página para imprimir y entregar: https://iae-propuestas-ia.vercel.app/directiva/resumen/
+
+**Alerta para Tommy:** el nivel 1 usa la cuenta de adulto del profesor, con los alumnos mirando y respondiendo, sin cuentas propias. Es la forma más simple de cumplir el límite de 18 años de las cuentas personales. Igual conviene que la coordinación confirme que le parece bien esa forma de uso en clase.
+
+**Resultados:**
+- `content-check` en PASS.
+- Pruebas de `/directiva/`: 27 de 27, incluida la del resumen en una hoja.
+- Launch-check: PASS 40 · WARN 2 · FAIL 0.
+- El CSS de `/` sigue idéntico.
+
+---
+
 ## Tercera vuelta (14-oct-2026, noche): que impresione
 
 **Rehíce la propuesta alrededor de una idea que la hace distinta: aprender enseñando.**

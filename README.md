@@ -9,9 +9,11 @@ Presentación web interactiva para la **coordinación académica del Instituto A
 
 **https://iae-propuestas-ia.vercel.app**
 
-**https://iae-propuestas-ia.vercel.app/directiva/** · presentación lineal para la directiva del IAE (16 láminas + apéndice, `noindex`). Detalle en `src/directiva/CLAUDE.md`.
+**https://iae-propuestas-ia.vercel.app/directiva/** · presentación lineal para la directiva del IAE (18 láminas + apéndice, `noindex`). Detalle en `src/directiva/CLAUDE.md`.
 
 **https://iae-propuestas-ia.vercel.app/directiva/curriculo/** · documento completo: 90 sesiones de 8.º a 10.º, rúbricas, formación docente y el Builders Club clase por clase (`noindex`).
+
+**https://iae-propuestas-ia.vercel.app/directiva/resumen/** · resumen de una página para imprimir y entregar (`noindex`).
 
 - Repo: https://github.com/tommyhanono/iae-propuestas-ia
 - Se despliega por CLI desde esta carpeta: `vercel --prod`.

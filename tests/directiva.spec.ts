@@ -293,3 +293,21 @@ test.describe('directiva · currículo completo', () => {
     await expect(page).toHaveURL(/\/directiva\/(#.*)?$/)
   })
 })
+
+test.describe('directiva · resumen de una página', () => {
+  test('cabe en una hoja carta al imprimir, sin scroll lateral en celular y sin errores', async ({ page }) => {
+    const errors = watchErrors(page)
+    for (const w of [375, 1100]) {
+      await page.setViewportSize({ width: w, height: 900 })
+      await page.goto('/directiva/resumen/')
+      await page.waitForLoadState('networkidle')
+      await page.evaluate(() => document.fonts.ready)
+      expect(await page.evaluate(() => document.documentElement.scrollWidth), `${w}px`).toBeLessThanOrEqual(w)
+      await expect(page.locator('h1')).toHaveCount(1)
+      await expect(page.locator('img[src="/qr-curriculo.svg"]')).toBeVisible()
+    }
+    const pdf = await page.pdf({ format: 'Letter', printBackground: true, preferCSSPageSize: true })
+    expect((pdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length).toBe(1)
+    expect(errors).toEqual([])
+  })
+})

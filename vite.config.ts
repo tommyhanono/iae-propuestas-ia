@@ -13,6 +13,7 @@ export default defineConfig({
         main: resolve(import.meta.dirname, 'index.html'),
         directiva: resolve(import.meta.dirname, 'directiva/index.html'),
         curriculo: resolve(import.meta.dirname, 'directiva/curriculo/index.html'),
+        resumen: resolve(import.meta.dirname, 'directiva/resumen/index.html'),
       },
     },
   },

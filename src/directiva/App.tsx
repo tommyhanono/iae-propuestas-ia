@@ -222,7 +222,7 @@ export default function App() {
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z M15 3v4h4 M9 12h7 M9 16h7" stroke="currentColor" strokeWidth="2" fill="none" /></svg>
           <span className="lbl">Currículo completo</span>
         </a>
-        <button type="button" className="dx-btn" onClick={() => setDialog('help')} aria-label="Ayuda y atajos de teclado (?)">
+        <button type="button" className="dx-btn dx-btn-wide" onClick={() => setDialog('help')} aria-label="Ayuda y atajos de teclado (?)">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" fill="none" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5V14 M12 17.2v.3" stroke="currentColor" strokeWidth="2" fill="none" /></svg>
           <span className="lbl">Ayuda</span>
         </button>

@@ -30,7 +30,9 @@ for (const vp of sizes) {
     await page.evaluate(() => document.fonts.ready)
     const beats = beatsOf(s)
     for (let b = 0; b < beats; b++) {
-      if (beats > 1 && b === 0) {
+      const flow = (await page.getAttribute('[data-app]', 'data-mode')) === 'flow'
+      if (flow && b > 0) break // en celular la lámina se ve completa, sin beats
+      if (beats > 1 && b === 0 && !flow) {
         // Al abrir por hash la lámina llega completa: se retrocede al primer beat.
         for (let k = 0; k < beats - 1; k++) await page.keyboard.press('ArrowLeft')
       } else if (b > 0) await page.keyboard.press('ArrowRight')

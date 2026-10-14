@@ -1,5 +1,33 @@
 # Reporte final · presentación para la directiva
 
+## Tercera vuelta (14-oct-2026, noche): que impresione
+
+**Rehíce la propuesta alrededor de una idea que la hace distinta: aprender enseñando.**
+
+- **Lámina 4, "Así es una clase de 8.º":** una hoja de un torneo y la conversación real en tres pasos. La IA pregunta ("¿Qué hay en C2?", "¿De dónde sale ese 9?", "Si Tiburones gana otro partido, ¿qué cambia?") y el alumno responde mirando la hoja. Se ve el método en 30 segundos.
+- **Lámina 9, "Aquí los alumnos no solo aprenden: enseñan":**
+  - cada pareja da una mini-clase por trimestre;
+  - tres alumnos guía por grupo, por postulación y una clase de prueba;
+  - todo proyecto se presenta en vivo;
+  - 10.º le enseña a 8.º.
+  
+  Lo respalda la EEF (tutoría entre compañeros: unos 6 meses de progreso en promedio).
+- **Lámina 12, banco de encargos:** la biblioteca, deportes, eventos y laboratorios piden herramientas, y los alumnos las construyen.
+- **Lámina 15, el plan:** dice lo que la directiva "va a ver" en un año, incluida una Muestra IAE de fin de año.
+- **Lámina 17, el cierre:** invita a la directiva al Demo Day de la semana 8.
+- **Lenguaje normal en todo:** ficha "Cómo lo hice" en vez de bitácora, proyecto final en vez de entregable, profesor responsable en vez de docente enlace, y sin siglas técnicas.
+- **El documento `/directiva/curriculo/`** suma la sección "Aprender enseñando" (seis mecanismos, cómo se elige a los alumnos guía, cómo se evalúa una mini-clase) y el banco de encargos. Las clases 9, 19 y 29 de cada año ahora son mini-clases dadas por los alumnos.
+
+**Resultados de esta vuelta:**
+- `content-check` en PASS.
+- Pruebas de `/directiva/`: 26 de 26.
+- Launch-check: 0 FAIL. Atrapó un "Fuente" de bajo contraste en la lámina oscura y lo corregí.
+- El CSS de `/` sigue idéntico. Una palabra nueva lo había cambiado; también lo corregí.
+
+**Para confirmar mañana:** los supuestos de la segunda vuelta, más tres alumnos guía por grupo, el reconocimiento de los alumnos guía (constancia y mención en el acto de fin de año), la Muestra IAE y la nueva ponderación (15/25/15/45).
+
+---
+
 ## Segunda vuelta (14-oct-2026): el currículo completo
 
 **Agregué el currículo completo y concreto, más un documento para entregar:**

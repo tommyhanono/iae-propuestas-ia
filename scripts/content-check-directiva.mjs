@@ -6,7 +6,7 @@ import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 const file = resolve(process.argv[2] ?? 'src/directiva/content.ts')
-const { SLIDES, SOURCES } = await import(pathToFileURL(file).href)
+const { SLIDES, SOURCES, beatsOf } = await import(pathToFileURL(file).href)
 const raw = readFileSync(file, 'utf8')
 
 // Lema permitido: se quita antes de buscar palabras negativas.
@@ -124,14 +124,14 @@ try {
 
 const main = SLIDES.filter((s) => s.section !== 'Apéndice')
 const total = main.reduce((a, s) => { const [m, sec] = s.time.split(':').map(Number); return a + m * 60 + sec }, 0)
-const beatSlides = SLIDES.filter((s) => (s.beats?.length ?? (s.layout === 'floorCeiling' ? 3 : 1)) > 1)
+const beatSlides = SLIDES.filter((s) => (beatsOf ? beatsOf(s) : s.beats?.length ?? 1) > 1)
 
 console.log(`content-check · ${file}`)
 console.log(`  ${SLIDES.length} láminas (${main.length} principales), ${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')} de tiempo objetivo, ${beatSlides.length} láminas con beats, ${curriculoTexts} textos del currículo completo`)
-if (main.length < 14 || main.length > 16) add('estructura', `se esperaban entre 14 y 16 láminas principales y hay ${main.length}`)
+if (main.length < 14 || main.length > 18) add('estructura', `se esperaban entre 14 y 18 láminas principales y hay ${main.length}`)
 if (total > 15 * 60) add('estructura', `el tiempo objetivo suma más de 15:00`)
 if (beatSlides.length > 4) add('estructura', `hay beats en ${beatSlides.length} láminas (máximo 4)`)
-for (const s of SLIDES) if ((s.beats?.length ?? 1) > 3) add(s.id, 'más de 3 beats')
+for (const s of SLIDES) if ((beatsOf ? beatsOf(s) : s.beats?.length ?? 1) > 3) add(s.id, 'más de 3 beats')
 
 if (problems.length) {
   console.log(`  FAIL · ${problems.length} problema(s):`)

@@ -231,7 +231,8 @@ test.describe('directiva · reduced motion', () => {
   test.use({ viewport: { width: 1366, height: 768 }, colorScheme: 'light' })
   test('con prefers-reduced-motion los beats aparecen sin animación', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
-    await open(page, '4')
+    // Desde la lámina 2, → entra a la 3 en su primer beat: hay elementos revelados y por revelar.
+    await open(page, '2')
     await page.keyboard.press('ArrowRight')
     await page.waitForTimeout(60)
     const op = await page.locator('.dx-viewport [data-beat="on"]').first().evaluate((el) => getComputedStyle(el).opacity)

@@ -17,7 +17,7 @@ Presentación **lineal** de 16 láminas + 12 de apéndice para la directiva del 
 - Todo dato externo lleva `sources` y una entrada en `FUENTES-DIRECTIVA.md`.
 - Beats: máximo 3 por lámina y en máximo 4 láminas. En celular (modo flujo) la lámina se ve completa.
 - Lienzo de 1600×900: titular 80, cuerpo 44, secundario 36, mínimo 34, pie 26 (unidades del lienzo).
-- No escribir el nombre de la curva de salida de CSS ("ease" + guion + "out") en `src/` ni en este archivo: Tailwind lo toma como clase y cambia el CSS de `/`. Usar `cubic-bezier(0, 0, 0.2, 1)`.
+- Tailwind escanea todo `src/` (también este archivo) y suma al CSS de `/` cualquier palabra que coincida con una de sus clases: el nombre de la curva de salida de CSS ("ease" + guion + "out") o el valor que une los bordes de una tabla escrito en un estilo en línea. Usar `cubic-bezier(0, 0, 0.2, 1)` y clases propias en `directiva.css`. Después de cada build, comparar el CSS de `/` con el de `main`.
 
 ## Comandos
 

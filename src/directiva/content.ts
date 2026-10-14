@@ -37,7 +37,7 @@ export const SOURCES: Record<SourceId, Source> = {
     date: 'enero de 2026', url: 'https://www.oecd.org/en/publications/oecd-digital-education-outlook-2026_062a7394-en.html',
   },
   estonia: {
-    id: 'estonia', short: 'Ministerio de Educación de Estonia, 2025', publisher: 'Ministerio de Educación e Investigación de Estonia',
+    id: 'estonia', short: 'Gobierno de Estonia, 2025', publisher: 'Ministerio de Educación e Investigación de Estonia',
     title: 'AI Leap Programme to Bring AI Tools to All Schools', date: 'febrero de 2025',
     url: 'https://www.hm.ee/en/news/estonia-announces-groundbreaking-national-initiative-ai-leap-programme-bring-ai-tools-all',
   },
@@ -165,12 +165,12 @@ export const SLIDES: Slide[] = [
     id: 'seis-clases', section: 'Builders Club', tone: 'paper', layout: 'timeline', time: '1:15',
     title: 'En seis clases, cada miembro llega al Demo Day con un producto.',
     stations: [
-      { n: '1', title: 'Fundamentos', out: 'Cada quien resuelve algo suyo ese día.' },
-      { n: '2', title: 'Segundo cerebro', out: 'Sus notas organizadas en Obsidian.' },
-      { n: '3', title: 'Modelos y superficies', out: 'La misma tarea en terminal y en escritorio.' },
-      { n: '4', title: 'Conectar herramientas', out: 'La IA conectada a Excel o Drive.' },
-      { n: '5', title: 'Prompting de construcción', out: 'Una mini-herramienta funcionando.' },
-      { n: '6', title: 'Demo Day', out: 'Un producto que beneficie al colegio.' },
+      { n: '1', title: 'Fundamentos', out: 'Resuelve algo suyo ese día.' },
+      { n: '2', title: 'Segundo cerebro', out: 'Sus notas, en Obsidian.' },
+      { n: '3', title: 'Modelos y superficies', out: 'Terminal o escritorio.' },
+      { n: '4', title: 'Conectar herramientas', out: 'La IA con Excel o Drive.' },
+      { n: '5', title: 'Prompting de construcción', out: 'Una mini-herramienta lista.' },
+      { n: '6', title: 'Demo Day', out: 'Un producto para el colegio.' },
     ],
     beats: [[0, 1], [2, 3, 4], [5]],
     line: 'Una sesión por semana. Después del Demo Day, el temario lo definen los miembros.',
@@ -181,7 +181,7 @@ export const SLIDES: Slide[] = [
     title: 'La meta son productos que el colegio use de verdad.',
     lead: 'Ya hay una prueba de que se puede.',
     card: {
-      eyebrow: 'En reserva · prueba de concepto',
+      eyebrow: 'En reserva',
       title: 'Proyecto SAT',
       impact: 'Un proyecto de alumno que puede cambiar cómo se enseña el SAT.',
       meta: 'Hecho por un alumno del IAE',
@@ -191,11 +191,11 @@ export const SLIDES: Slide[] = [
   },
   {
     id: 'evidencia', section: 'Evidencia y garantías', tone: 'paper', layout: 'evidence', time: '1:15',
-    title: 'La evidencia coincide: la IA enseña cuando está pensada para enseñar.',
+    title: 'La IA enseña cuando está pensada para enseñar.',
     items: [
-      { claim: 'Más aprendizaje en menos tiempo', detail: 'En un ensayo controlado con 194 estudiantes de física en Harvard, un tutor de IA diseñado con principios pedagógicos logró más aprendizaje en menos tiempo que la clase de aprendizaje activo.', source: 'kestin' },
-      { claim: 'Con propósito pedagógico', detail: 'La OCDE recomienda usar la IA con un propósito pedagógico claro: las herramientas pensadas para aprender, con guía docente, son las que generan aprendizaje.', source: 'oecd' },
-      { claim: 'Un país que ya empezó', detail: 'Estonia lanzó en 2025 un programa nacional para 20.000 estudiantes de 10.º y 11.º, empezando por formar a sus docentes.', source: 'estonia' },
+      { claim: 'Más aprendizaje en menos tiempo', detail: 'Ensayo controlado con 194 estudiantes de física en Harvard: un tutor de IA con diseño pedagógico superó a la clase de aprendizaje activo.', source: 'kestin' },
+      { claim: 'Con propósito y guía docente', detail: 'La OCDE recomienda usar la IA con un propósito pedagógico claro: así es como genera aprendizaje.', source: 'oecd' },
+      { claim: 'Un país que ya empezó', detail: 'Estonia lanzó en 2025 un programa nacional para 20.000 estudiantes de 10.º y 11.º, empezando por sus docentes.', source: 'estonia' },
     ],
     notes: 'Tres datos, todos con fuente en el apéndice. Uno: un ensayo controlado en Harvard, publicado en 2025, encontró que un tutor de IA bien diseñado logró más aprendizaje en menos tiempo que una clase activa. Es un estudio con universitarios, en un solo curso, así que lo tomo como una señal, no como una ley. Dos: la OCDE, en su informe de 2026, dice que la IA de uso general ayuda a terminar tareas, pero que el aprendizaje llega cuando la herramienta tiene un propósito pedagógico y un docente detrás. Por eso el currículo pone a la IA a preguntar, no a contestar. Tres: Estonia ya lo hace a escala nacional, y empezó por sus docentes. Es el mismo orden que les propongo.',
     sources: ['kestin', 'oecd', 'estonia'],
@@ -204,11 +204,11 @@ export const SLIDES: Slide[] = [
     id: 'garantias', section: 'Evidencia y garantías', tone: 'paper', layout: 'pledges', time: '1:15',
     title: 'Así cuidamos la integridad, la supervisión y los datos.',
     items: [
-      { label: 'Integridad', text: 'Las reglas de uso se conversan con los miembros desde el primer día, y cada producto se presenta y se explica en vivo.' },
-      { label: 'Supervisión', text: 'Un docente enlace acompaña. El acceso es institucional, con herramientas aptas para la edad de los estudiantes y dentro de los términos de cada proveedor.' },
-      { label: 'Datos', text: 'En los prompts no se ingresan datos personales. Consentimiento de los acudientes cuando corresponda, con los principios de la Ley 81 de 2019.' },
+      { label: 'Integridad', text: 'Reglas de uso conversadas desde el primer día. Cada producto se presenta y se explica en vivo.' },
+      { label: 'Supervisión', text: 'Un docente enlace acompaña. Acceso institucional, con herramientas aptas para su edad.' },
+      { label: 'Datos', text: 'Sin datos personales en los prompts. Consentimiento de los acudientes y principios de la Ley 81 de 2019.' },
     ],
-    footnote: 'Detalle del acceso supervisado en el apéndice A3 y de los datos personales en el A4.',
+    footnote: 'Detalle en los apéndices A3 y A4.',
     sources: ['ley81', 'anthropic'],
     notes: 'Sé que la primera pregunta de un colegio es cómo se cuida esto. Tres compromisos. Integridad: las reglas se hablan con los miembros desde el primer día, y como cada producto se presenta y se explica en vivo, el trabajo se ve. En un club que construye no hay nada que copiar: el producto no existe hasta que alguien lo hace. Supervisión: un docente enlace acompaña, y el acceso es institucional, con herramientas aptas para la edad y dentro de los términos de cada proveedor. Datos: en los prompts no van datos personales, y seguimos los principios de la Ley 81, finalidad, proporcionalidad, seguridad y consentimiento.',
   },
@@ -218,9 +218,9 @@ export const SLIDES: Slide[] = [
     columns: ['Fase', 'Cuándo', 'Cómo sabremos que funciona'],
     rows: [
       ['Preparación', 'Semanas 1 y 2', 'Docente enlace nombrado y herramienta apta elegida.'],
-      ['Builders Club', 'Semanas 3 a 8', 'Cada miembro o equipo presenta un producto en el Demo Day.'],
-      ['Piloto del currículo', 'Un grupo de 8.º, arranque a confirmar', 'Cada alumno del grupo lee y explica un Excel real.'],
-      ['Ampliación', 'Según resultados', 'La directiva decide con el informe de cada fase.'],
+      ['Builders Club', 'Semanas 3 a 8', 'Cada equipo presenta un producto en el Demo Day.'],
+      ['Piloto del currículo', 'A confirmar', 'Un grupo de 8.º lee y explica un Excel real.'],
+      ['Ampliación', 'Según resultados', 'La directiva decide con cada informe.'],
     ],
     beats: [[0], [1], [2, 3]],
     notes: 'Así se ve el plan, en semanas y no en fechas, porque depende de cuándo ustedes decidan. Las dos primeras semanas son de preparación: nombrar al docente enlace y elegir la herramienta. De la semana 3 a la 8 corre el club, hasta el Demo Day. El piloto del currículo arranca con un solo grupo de 8.º, cuando la coordinación lo vea posible. Y cada fase termina con un informe corto para que ustedes decidan si se amplía.',
@@ -280,13 +280,13 @@ export const SLIDES: Slide[] = [
   },
   {
     id: 'A3', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
-    title: 'Acceso supervisado, dentro de los términos de cada proveedor',
+    title: 'Acceso supervisado y términos del proveedor',
     items: [
-      { label: 'Qué pedimos', text: 'Respaldo institucional para que los estudiantes usen herramientas de IA aptas para su edad, con cuentas gestionadas por el colegio y un docente enlace.' },
-      { label: 'Un ejemplo verificado', text: 'Anthropic pide 18 años para sus cuentas personales. Para menores, sus términos contemplan productos de organizaciones que integran su tecnología con salvaguardas: verificación de edad, moderación y supervisión.' },
-      { label: 'Cómo se elige', text: 'En la fase de preparación, el docente enlace y la coordinación eligen la herramienta que cumple los términos del proveedor para la edad de cada grupo.' },
+      { label: 'Qué pedimos', text: 'Respaldo institucional para usar herramientas de IA aptas para su edad, con cuentas del colegio y un docente enlace.' },
+      { label: 'Un ejemplo verificado', text: 'Anthropic pide 18 años para sus cuentas personales. Para menores, contempla productos de organizaciones con salvaguardas: verificación de edad, moderación y supervisión.' },
+      { label: 'Cómo se elige', text: 'En la preparación, el docente enlace y la coordinación eligen la herramienta que cumple esos términos.' },
     ],
-    footnote: 'Términos de consumo de Anthropic (8-oct-2025) y guía para organizaciones que atienden a menores (16-mar-2026).',
+    footnote: 'Términos de consumo (8-oct-2025) y guía para menores (16-mar-2026).',
     sources: ['anthropic'],
     notes: 'Si preguntan por el acceso: pedimos respaldo institucional, no cuentas personales. Cada proveedor pone sus condiciones de edad, y elegimos la herramienta que las cumple. Por ejemplo, Anthropic pide 18 años para sus cuentas personales y, para menores, contempla productos de organizaciones con salvaguardas. Esa elección se hace en las dos semanas de preparación.',
   },
@@ -338,4 +338,9 @@ export const MAIN_COUNT = APPENDIX_START
 
 export function beatsOf(s: Slide): number {
   return s.layout === 'table' || s.layout === 'timeline' ? s.beats.length : s.layout === 'floorCeiling' ? 3 : 1
+}
+
+/** Número visible de una lámina: 01 / 14 … 14 / 14, o A1…A7 en el apéndice. */
+export function slideNumber(i: number): string {
+  return i >= APPENDIX_START ? SLIDES[i].id : `${String(i + 1).padStart(2, '0')} / ${MAIN_COUNT}`
 }

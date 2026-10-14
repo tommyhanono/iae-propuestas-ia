@@ -72,6 +72,15 @@ Todo nivel A (abierto en esta sesión).
 - **Pasajes (nivel B, antai.gob.pa):** principios "lealtad, finalidad, proporcionalidad, veracidad y exactitud, seguridad de los datos, transparencia, confidencialidad, licitud, portabilidad"; consentimiento "previo, inequívoco, informado, trazable".
 - **No verificado y por eso fuera de pantalla:** las reglas específicas sobre menores (la misión menciona que afectar a menores sería un agravante). No encontré el pasaje. La lámina habla de prácticas y compromisos, no de cumplimiento legal.
 
+### F8 · Tutoría entre compañeros (láminas 9 y 13, documento “Aprender enseñando”)
+- **Afirmación en pantalla:** "La tutoría entre compañeros suma en promedio unos seis meses de progreso en un año escolar, sobre todo cuando los tutores se preparan."
+- **Cifra:** unos 6 meses adicionales de progreso en un año (promedio de la síntesis).
+- **Fuente:** Education Endowment Foundation (Reino Unido), *Teaching and Learning Toolkit: Peer tutoring*.
+- **URL:** https://educationendowmentfoundation.org.uk/education-evidence/teaching-learning-toolkit/peer-tutoring
+- **Pasajes (nivel B):** "an average positive effect equivalent to approximately six additional months' progress within one academic year"; "particularly effective when pupils are provided with support to ensure that the quality of peer interaction is high, such as tutor training and questioning frames."
+- **Límite (dicho en las notas del orador):** un blog de la misma fundación reporta estudios con efectos menores (unos 3 meses en un ensayo en Escocia, 5 meses en una revisión de 72 estudios) y un ensayo sin diferencia. Por eso en pantalla dice "en promedio", y la propuesta prepara a los alumnos guía. https://educationendowmentfoundation.org.uk/news/blog-peer-tutoring-interpreting-new-evidence
+- **Cambio en pantalla:** este dato reemplazó al de Estonia en la lámina de evidencia. Estonia pasó a la nota al pie de la lámina del plan (mismo dato F5).
+
 ## Lo que se sacó por falta de fuente sólida
 
 - "95 % de los estudiantes de secundaria ya usa IA" (Estonia): es una frase de un directivo del programa en una entrevista, no una medición. No se usa.

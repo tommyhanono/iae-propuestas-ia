@@ -1,14 +1,16 @@
 import { SOURCES } from '../content'
-import { CLUB, FORMACION, GRADES, IMPLEMENTACION, MARCO, METRICAS, NIVELES, PORTAFOLIO, type Grade } from '../curriculo'
+import { CLUB, ENCARGOS, ENSENAR, FORMACION, GRADES, IMPLEMENTACION, MARCO, METRICAS, NIVELES, PORTAFOLIO, type Grade } from '../curriculo'
 
 const TOC = [
   { id: 'resumen', t: 'Resumen' },
   { id: 'como-funciona', t: 'Cómo funciona' },
+  { id: 'ensenar', t: 'Aprender enseñando' },
   ...GRADES.map((g) => ({ id: `grado-${g.id}`, t: `${g.grado} · ${g.verbo}` })),
   { id: 'portafolio', t: 'El portafolio' },
   { id: 'evaluacion', t: 'Evaluación' },
   { id: 'formacion', t: 'Formación docente' },
   { id: 'club', t: 'Builders Club' },
+  { id: 'encargos', t: 'Banco de encargos' },
   { id: 'garantias', t: 'Garantías' },
   { id: 'implementacion', t: 'Implementación y métricas' },
   { id: 'fuentes', t: 'Fuentes' },
@@ -80,13 +82,13 @@ function GradeSection({ g }: { g: Grade }) {
       <h3>Prompt de ejemplo</h3>
       <blockquote className="prompt">{g.prompt}</blockquote>
 
-      <h3>Entregable del año: {g.entregable.nombre}</h3>
+      <h3>Proyecto final: {g.entregable.nombre}</h3>
       <p>{g.entregable.descripcion}</p>
       <ul className="checks">
         {g.entregable.formato.map((f) => <li key={f}>{f}</li>)}
       </ul>
 
-      <h3>Rúbrica del entregable</h3>
+      <h3>Rúbrica del proyecto final</h3>
       <div className="rubric-wrap">
         <table className="rubric">
           <thead>
@@ -135,7 +137,7 @@ export default function Doc() {
             <h2 id="h-resumen">Resumen</h2>
             <table className="overview">
               <thead>
-                <tr><th scope="col">Año</th><th scope="col">Verbo</th><th scope="col">Unidades</th><th scope="col">Entregable del año</th></tr>
+                <tr><th scope="col">Año</th><th scope="col">Verbo</th><th scope="col">Unidades</th><th scope="col">Proyecto final</th></tr>
               </thead>
               <tbody>
                 {GRADES.map((g) => (
@@ -162,11 +164,30 @@ export default function Doc() {
             <KV items={MARCO.carga} />
             <h3>Principios</h3>
             <KV items={MARCO.principios} />
-            <h3>La bitácora de IA</h3>
-            <p>Cada sesión cierra con cuatro líneas escritas por el alumno:</p>
+            <h3>La ficha “Cómo lo hice”</h3>
+            <p>Cada sesión cierra con cuatro preguntas que el alumno responde en pocas líneas:</p>
             <ol className="numbered">
-              {MARCO.bitacora.map((b) => <li key={b}>{b}</li>)}
+              {ENSENAR.fichaPreguntas.map((b) => <li key={b}>{b}</li>)}
             </ol>
+          </section>
+
+          <section id="ensenar" aria-labelledby="h-ensenar">
+            <h2 id="h-ensenar">Aprender enseñando: lo que hace diferente esta propuesta</h2>
+            <p className="lead">{ENSENAR.idea}</p>
+            {ENSENAR.mecanismos.map((m) => (
+              <div key={m.nombre} className="unit">
+                <div className="unit-head">
+                  <p className="eyebrow">{m.cuando}</p>
+                  <h4>{m.nombre}</h4>
+                </div>
+                <p>{m.como}</p>
+              </div>
+            ))}
+            <h3>Alumnos guía</h3>
+            <KV items={ENSENAR.guias} />
+            <h3>Cómo se evalúa una mini-clase</h3>
+            <KV items={ENSENAR.miniclaseRubrica} />
+            <p className="note">La tutoría entre compañeros suma en promedio unos seis meses de progreso en un año escolar, y funciona mejor cuando los tutores se preparan y tienen guías de preguntas (Education Endowment Foundation). Los resultados varían entre estudios; por eso los alumnos guía se preparan con el profesor.</p>
           </section>
 
           {GRADES.map((g) => <GradeSection key={g.id} g={g} />)}
@@ -185,7 +206,7 @@ export default function Doc() {
             <h2 id="h-evaluacion">Evaluación</h2>
             <p>Propuesta de ponderación dentro de la nota de Tecnología, a confirmar con la coordinación:</p>
             <KV items={MARCO.calificacion} />
-            <p>Las rúbricas de cada año usan cuatro niveles: Inicial, En desarrollo, Logrado y Destacado. La meta del piloto es que el grupo llegue a Logrado o Destacado en el entregable de la unidad 1.</p>
+            <p>Las rúbricas de cada año usan cuatro niveles: Inicial, En desarrollo, Logrado y Destacado. La meta del piloto es que el grupo llegue a Logrado o Destacado en el proyecto de la unidad 1.</p>
           </section>
 
           <section id="formacion" aria-labelledby="h-formacion">
@@ -197,7 +218,7 @@ export default function Doc() {
             <header className="grade-head">
               <p className="eyebrow">9.º a 11.º · voluntario</p>
               <h2 id="h-club">Builders Club: la IA es la herramienta, lo que importa es el producto</h2>
-              <p className="lead">Un club donde se construyen productos reales que le sirvan al colegio. Cada sesión termina con algo hecho.</p>
+              <p className="lead">Un club donde se construyen herramientas que el colegio necesita. Cada sesión termina con algo hecho, y las sesiones las preparan y las dan los propios miembros.</p>
             </header>
             <KV items={CLUB.ficha} />
             <h3>Las seis clases, minuto a minuto</h3>
@@ -214,7 +235,7 @@ export default function Doc() {
                 <p className="evidence"><span>Sale de la clase</span>{s.sale}</p>
               </div>
             ))}
-            <h3>Cómo se evalúa un producto en el Demo Day</h3>
+            <h3>Cómo se evalúa un producto en el Demo Day (día de demostración)</h3>
             <KV items={CLUB.demoRubrica} />
             <h3>Después del primer Demo Day</h3>
             <KV items={CLUB.despues} />
@@ -226,12 +247,20 @@ export default function Doc() {
             </ol>
           </section>
 
+          <section id="encargos" aria-labelledby="h-encargos">
+            <h2 id="h-encargos">Banco de encargos: el colegio pide, los alumnos construyen</h2>
+            <p className="lead">{ENCARGOS.idea}</p>
+            <h3>Ejemplos de encargos</h3>
+            <KV items={ENCARGOS.ejemplos} />
+            <p className="note">{ENCARGOS.como}</p>
+          </section>
+
           <section id="garantias" aria-labelledby="h-garantias">
             <h2 id="h-garantias">Garantías: integridad, supervisión y datos</h2>
             <KV items={[
-              { k: 'Integridad', v: 'Todo entregable se explica en voz alta y lleva bitácora de IA. En el club, cada producto se presenta en vivo. Los trabajos con reglas propias, como AP Research, siguen sus reglas tal cual.' },
-              { k: 'Supervisión', v: 'Un docente enlace acompaña el club y el docente de Tecnología guía el currículo. El acceso es institucional, con la herramienta que el colegio apruebe para la edad de cada grupo y dentro de los términos de cada proveedor.' },
-              { k: 'Datos personales', v: 'En los prompts no se ingresan nombres, notas ni datos de nadie; los archivos de práctica usan datos ficticios o anonimizados. Los acudientes reciben una explicación clara y dan su consentimiento cuando corresponda.' },
+              { k: 'Integridad', v: 'Todo proyecto se presenta y se explica en vivo, y lleva su ficha “Cómo lo hice”. Cada alumno además da mini-clases a sus compañeros: explicarlo frente a otros es la prueba de que es suyo. Los trabajos con reglas propias, como AP Research, siguen sus reglas tal cual.' },
+              { k: 'Supervisión', v: 'Un profesor responsable acompaña el club y el profesor de Tecnología guía el currículo, con el apoyo de los alumnos guía. El acceso es institucional, con la herramienta que el colegio apruebe para la edad de cada grupo y dentro de los términos de cada proveedor.' },
+              { k: 'Datos personales', v: 'En lo que se le pide a la IA no van nombres, notas ni datos de nadie; los archivos de práctica usan datos ficticios o anonimizados. Los acudientes reciben una explicación clara y dan su consentimiento cuando corresponda.' },
               { k: 'Marco', v: 'Seguimos los principios de la Ley 81 de 2019 y su reglamento (Decreto Ejecutivo 285 de 2021): finalidad, proporcionalidad, seguridad, transparencia y consentimiento. Son prácticas y compromisos, no una opinión legal.' },
               { k: 'Términos del proveedor', v: 'Las herramientas de IA tienen requisitos de edad. Por ejemplo, Anthropic pide 18 años para sus cuentas personales y, para menores, contempla productos de organizaciones con salvaguardas. Por eso pedimos respaldo institucional, no cuentas personales.' },
             ]} />
@@ -249,8 +278,8 @@ export default function Doc() {
             <KV items={METRICAS} />
             <h3>Lo que pone el colegio y lo que ponemos nosotros</h3>
             <KV items={[
-              { k: 'El colegio', v: 'Un docente enlace para el club, el período semanal de Tecnología para el currículo, un horario y un salón para el club, y el acceso supervisado a una herramienta apta.' },
-              { k: 'Nosotros', v: 'El plan de las seis clases y sus materiales, la coordinación del club, apoyo para preparar las guías de cada unidad e informes al cierre de cada fase.' },
+              { k: 'El colegio', v: 'Un profesor responsable para el club, el período semanal de Tecnología para el currículo, un horario y un salón para el club, y el acceso supervisado a una herramienta apta.' },
+              { k: 'Nosotros', v: 'El plan de las seis clases y sus materiales, la coordinación del club, alumnos guía preparados, apoyo para las guías de cada unidad e informes al cierre de cada fase.' },
             ]} />
             <p className="note">Las fechas exactas dependen del calendario del IAE y quedan a confirmar.</p>
           </section>

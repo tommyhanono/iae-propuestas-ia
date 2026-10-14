@@ -356,14 +356,16 @@ function Body({ slide, beat, mode }: ViewProps) {
         </div>
       )
 
-    case 'pledges':
+    case 'pledges': {
+      const navy = slide.tone === 'navy'
+      const line = navy ? 'rgb(235 238 242 / 0.16)' : 'rgb(43 64 102 / 0.2)'
       return (
         <div className="slide-body" style={{ justifyContent: 'center', gap: gap(24, 16), paddingTop: gap(8, 16) }}>
           <ol style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column' }}>
             {slide.items.map((it, i) => (
-              <li key={it.label} style={{ display: 'flex', flexDirection: stage ? 'row' : 'column', gap: gap(48, 4), padding: `${gap(20, 14)}px 0`, borderTop: i ? '1px solid rgb(43 64 102 / 0.2)' : '2px solid var(--ink)' }}>
-                <p className="t-sec strong serif" style={{ flex: stage ? '0 0 300px' : undefined, display: 'flex', gap: gap(18, 10), alignItems: 'baseline' }}>
-                  <span className="tabular" style={{ color: 'var(--bronze)' }}>{pad(i + 1)}</span>{it.label}
+              <li key={it.label} style={{ display: 'flex', flexDirection: stage ? 'row' : 'column', gap: gap(48, 4), padding: `${gap(20, 14)}px 0`, borderTop: i ? `1px solid ${line}` : `2px solid ${navy ? 'var(--gold)' : 'var(--ink)'}` }}>
+                <p className="t-sec strong serif" style={{ flex: stage ? '0 0 380px' : undefined, display: 'flex', gap: gap(18, 10), alignItems: 'baseline' }}>
+                  <span className="tabular" style={{ color: navy ? 'var(--gold)' : 'var(--bronze)' }}>{pad(i + 1)}</span>{it.label}
                 </p>
                 <p className="t-small" style={{ flex: 1 }}>{it.text}</p>
               </li>
@@ -375,6 +377,83 @@ function Body({ slide, beat, mode }: ViewProps) {
           </p>
         </div>
       )
+    }
+
+    case 'demo': {
+      const b = Math.min(beat, slide.chat.length - 1)
+      const focus = slide.sheet.focus[b]
+      const on = (r: number, c: number) => focus.some(([fr, fc]) => fr === r && fc === c)
+      return (
+        <div className="slide-body" style={{ display: 'flex', flexDirection: stage ? 'row' : 'column', gap: gap(56, 20), paddingTop: gap(28, 16), alignItems: stage ? 'flex-start' : 'stretch' }}>
+          <figure className="sheet" aria-label={`Hoja de ejemplo: ${slide.sheet.caption}`} style={{ flex: stage ? '0 0 580px' : undefined, padding: gap(24, 14) }}>
+            <p className="eyebrow" style={{ marginBottom: gap(14, 8) }}>{slide.sheet.caption}</p>
+            <p className="tabular" data-formula style={{ fontFamily: 'ui-monospace, Menlo, Consolas, monospace', fontSize: gap(26, 15), padding: `${gap(8, 6)}px ${gap(14, 10)}px`, border: '1px solid rgb(43 64 102 / 0.3)', background: 'var(--paper)', marginBottom: gap(12, 8) }}>
+              <span style={{ color: 'var(--bronze)', fontWeight: 600, marginRight: 12 }}>fx</span>{slide.sheet.formula[b]}
+            </p>
+            <table style={{ fontSize: gap(26, 15) }} className="tabular dx-demo-table">
+              <thead>
+                <tr>{slide.sheet.columns.map((c, i) => <th key={i} scope="col" style={{ background: 'var(--paper-2)', color: 'var(--ink-muted)', fontWeight: 600, padding: `${gap(6, 4)}px`, border: '1px solid rgb(43 64 102 / 0.25)', width: i === 0 ? '9%' : undefined }}>{c}</th>)}</tr>
+              </thead>
+              <tbody>
+                {slide.sheet.rows.map((row, r) => (
+                  <tr key={r}>
+                    {row.map((cell, c) => {
+                      const hit = on(r, c)
+                      const Cell = c === 0 ? 'th' : 'td'
+                      return (
+                        <Cell
+                          key={c}
+                          scope={c === 0 ? 'row' : undefined}
+                          style={{
+                            padding: `${gap(8, 5)}px ${gap(10, 6)}px`,
+                            border: '1px solid rgb(43 64 102 / 0.25)',
+                            background: c === 0 ? 'var(--paper-2)' : hit ? 'rgb(200 162 75 / 0.22)' : r === 0 ? 'var(--paper)' : 'var(--paper-surface)',
+                            outline: hit ? '3px solid var(--bronze)' : undefined,
+                            outlineOffset: -3,
+                            fontWeight: r === 0 || c === 0 ? 600 : 400,
+                            color: c === 0 ? 'var(--ink-muted)' : 'var(--ink)',
+                            textAlign: c > 1 && r > 0 ? 'right' : 'left',
+                          }}
+                        >
+                          {cell}
+                        </Cell>
+                      )
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="t-small strong" style={{ borderLeft: '4px solid var(--gold)', paddingLeft: gap(20, 12), marginTop: gap(24, 14) }}>{slide.line}</p>
+          </figure>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: gap(12, 8) }} aria-label="Conversación de ejemplo entre la IA y el alumno">
+            {slide.chat.map((pair, k) => (
+              <Beat key={k} show={beat >= k}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: gap(8, 6) }}>
+                  {pair.map((m, j) => (
+                    <p
+                      key={j}
+                      className="t-dense"
+                      style={{
+                        alignSelf: m.who === 'ia' ? 'flex-start' : 'flex-end',
+                        maxWidth: '88%',
+                        padding: `${gap(10, 8)}px ${gap(18, 12)}px`,
+                        background: m.who === 'ia' ? 'var(--navy)' : 'var(--paper-surface)',
+                        color: m.who === 'ia' ? 'var(--navy-text)' : 'var(--ink)',
+                        border: m.who === 'ia' ? undefined : '1px solid rgb(43 64 102 / 0.25)',
+                        boxShadow: 'var(--shadow-lift)',
+                      }}
+                    >
+                      <span style={{ display: 'block', fontSize: '0.62em', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600, color: m.who === 'ia' ? 'var(--gold)' : 'var(--bronze)' }}>{m.who === 'ia' ? 'La IA pregunta' : 'El alumno responde'}</span>
+                      {m.text}
+                    </p>
+                  ))}
+                </div>
+              </Beat>
+            ))}
+          </div>
+        </div>
+      )
+    }
 
     case 'twoCols':
       return (
@@ -412,7 +491,7 @@ function Body({ slide, beat, mode }: ViewProps) {
               <p className="t-body serif strong" style={{ marginTop: gap(8, 4) }}>{slide.firstStep.text}</p>
             </div>
           </Focal>
-          <p className="t-foot">{slide.more}</p>
+          <p className="t-sec serif" style={{ borderLeft: '4px solid var(--gold)', paddingLeft: gap(24, 14), fontStyle: 'italic' }}>{slide.invite}</p>
         </div>
       )
 
@@ -441,7 +520,7 @@ function Body({ slide, beat, mode }: ViewProps) {
         <div className="slide-body" style={{ justifyContent: 'center', paddingTop: gap(8, 16) }}>
           <ol style={{ listStyle: 'none', padding: 0 }}>
             {Object.values(SOURCES).map((s, i) => (
-              <li key={s.id} style={{ padding: `${gap(10, 10)}px 0`, borderTop: i ? '1px solid rgb(43 64 102 / 0.2)' : '2px solid var(--ink)', fontSize: gap(24, 16), lineHeight: 1.35 }}>
+              <li key={s.id} style={{ padding: `${gap(7, 10)}px 0`, borderTop: i ? '1px solid rgb(43 64 102 / 0.2)' : '2px solid var(--ink)', fontSize: gap(22, 16), lineHeight: 1.3 }}>
                 <span className="strong">{s.publisher}</span> · {s.title} · {s.date}.{' '}
                 <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ink-line)', wordBreak: 'break-word' }}>{new URL(s.url).hostname.replace(/^www\./, '')}</a>
               </li>

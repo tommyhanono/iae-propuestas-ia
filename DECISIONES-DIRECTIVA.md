@@ -70,3 +70,32 @@ Tommy pidió más detalle concreto: "un currículum completado", no un resumen. 
 19. **Supuestos del club:** sesiones de 60 minutos; cupo inicial de 20 miembros; ciclos de seis semanas después del primer Demo Day; roles elegidos por los miembros.
 20. **Herramienta neutral.** El currículo habla de "la herramienta de IA que apruebe el colegio" y no nombra un producto, por los requisitos de edad de los proveedores (ver la alerta en `REPORTE-FINAL.md`).
 21. **Comillas tipográficas** (“ ”) en todo el texto: las comillas rectas se veían como ” ” con Space Grotesk.
+
+## Tercera vuelta: que impresione (14-oct-2026, noche)
+
+Tommy pidió que la propuesta impresione, en lenguaje más normal, con alumnos que enseñan y presentan. Decisiones:
+
+22. **Idea central nueva: aprender enseñando.** "La IA puede hacer un trabajo por un alumno, pero no puede pararse frente a la clase por él." Seis mecanismos:
+    - mini-clase de cada pareja cada trimestre, en las semanas 9, 19 y 29;
+    - tres alumnos guía por grupo, que rotan;
+    - todo proyecto se presenta en vivo;
+    - 10.º enseña a 8.º;
+    - el club apoya la formación docente;
+    - una Muestra IAE de fin de año.
+    
+    Va en la lámina 9 (navy, para que marque un antes y un después) y en una sección propia del documento.
+23. **Lámina de demostración "Así es una clase de 8.º"** con una hoja de un torneo ficticio y la conversación en tres pasos: la IA pregunta y el alumno responde. Muestra el método en vez de describirlo. Los datos son inventados (equipos ficticios, sin personas).
+24. **Banco de encargos.** Los departamentos del colegio piden y los alumnos construyen. Convierte "productos para el colegio" en un mecanismo concreto (lámina 12, apéndice A6, documento).
+25. **Lenguaje más normal:**
+    - "bitácora de IA" → ficha "Cómo lo hice";
+    - "entregable" → proyecto final;
+    - "docente enlace" → profesor responsable;
+    - "Modelos y superficies" → Elegir la herramienta;
+    - "Prompting de construcción" → Pedir bien para construir;
+    - sin "MCP" en pantalla;
+    - "Demo Day" se explica una vez como "día de demostración".
+26. **Evidencia:** el dato de la EEF sobre tutoría entre compañeros reemplaza al de Estonia en la lámina de evidencia, porque respalda la idea nueva. Estonia pasa a la lámina del plan.
+27. **Cierre con invitación:** además del primer paso, la lámina 17 invita a la directiva al Demo Day de la semana 8. Es la forma más barata de convencer: que lo vean. El plan termina con lo que "van a ver" en un año, incluida la Muestra IAE.
+28. **Nota:** la ficha "Cómo lo hice" baja a 15 %, prácticas a 25 %, entra la mini-clase con 15 % y el proyecto queda en 45 %. Todo a confirmar.
+29. **Estructura:** 17 láminas (13:35 de tiempo objetivo) y 14 de apéndice. La lámina del portafolio se fusionó con la de 10.º.
+30. **Tailwind y el CSS de `/`:** cualquier palabra en `src/` que coincida con una clase de Tailwind (por ejemplo, el valor que une los bordes de una tabla, escrito en un estilo en línea) se suma al CSS de `/`. Se usan clases propias en vez de esos valores en línea, y se compara el CSS de `/` byte a byte en cada build.

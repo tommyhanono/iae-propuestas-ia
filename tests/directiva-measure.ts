@@ -46,5 +46,7 @@ export function measureSlide(): SlideReport {
       if (px < minFont) { minFont = px; minFontText = label(el) }
     }
   })
+  // Texto que desborda su caja (una palabra larga) no mueve el rect del elemento: se mide en la lámina.
+  if (slide.scrollWidth > slide.clientWidth + 1) cut.push(`la lámina desborda a lo ancho ${slide.scrollWidth}>${slide.clientWidth}`)
   return { mode: app.dataset.mode!, docScrollW: document.documentElement.scrollWidth, vw: window.innerWidth, collisions, cut, minFont: Math.round(minFont * 10) / 10, minFontText }
 }

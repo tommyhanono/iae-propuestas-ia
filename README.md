@@ -9,6 +9,8 @@ Presentación web interactiva para la **coordinación académica del Instituto A
 
 **https://iae-propuestas-ia.vercel.app**
 
+**https://iae-propuestas-ia.vercel.app/directiva/** · presentación lineal para la directiva del IAE (14 láminas + apéndice, `noindex`). Detalle en `src/directiva/CLAUDE.md`.
+
 - Repo: https://github.com/tommyhanono/iae-propuestas-ia
 - Se despliega por CLI desde esta carpeta: `vercel --prod`.
 - `vercel.json` fija `framework: vite`. La navegación va por `#hash`, así que refrescar con cualquier `#hash` abre ese nodo; una ruta inexistente da la 404 propia (`public/404.html`).

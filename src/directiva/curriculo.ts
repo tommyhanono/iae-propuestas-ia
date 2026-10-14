@@ -48,7 +48,7 @@ export const MARCO = {
   carga: [
     { k: 'Dónde vive', v: 'Dentro de la clase de Tecnología o Informática de 8.º, 9.º y 10.º. No es una materia nueva. A confirmar con la coordinación.' },
     { k: 'Cuánto tiempo', v: 'Un período semanal de 45 minutos. Tres trimestres de 10 semanas: 30 sesiones por año, 90 en los tres años.' },
-    { k: 'Herramientas', v: 'Excel o Google Sheets, Word o Docs, PowerPoint o Slides, y la herramienta de IA que apruebe el colegio para la edad de cada grupo.' },
+    { k: 'Herramientas', v: 'Excel o Google Sheets, Word o Docs, PowerPoint o Slides, y la IA en dos niveles: desde el primer día, el profesor la maneja proyectada; cuando el colegio apruebe una herramienta apta para la edad, cada alumno la usa con cuenta del colegio.' },
     { k: 'Quién la dicta', v: 'El docente de Tecnología, con la guía de cada unidad, el banco de prompts y tres talleres de formación antes de arrancar.' },
     { k: 'Cómo se evalúa', v: 'Una ficha corta en cada sesión, prácticas guiadas, una mini-clase dada por el alumno y un proyecto por trimestre. El proyecto final de cada año se presenta en vivo y se evalúa con rúbrica de cuatro niveles.' },
   ],
@@ -130,7 +130,7 @@ export const GRADES: Grade[] = [
     ],
     claseTipo: [
       { min: '0–5', momento: 'Apertura', detalle: 'El docente proyecta el archivo del día y entrega el prompt de interrogación.' },
-      { min: '5–30', momento: 'La IA pregunta', detalle: 'Cada alumno pega el prompt; la IA le hace preguntas una por una sobre el archivo. El alumno verifica en la hoja antes de responder.' },
+      { min: '5–30', momento: 'La IA pregunta', detalle: 'La IA hace preguntas una por una sobre el archivo y el alumno revisa en la hoja antes de responder. En el nivel 1, el profesor maneja la IA proyectada y el grupo responde por turnos; en el nivel 2, cada alumno trabaja con su propia cuenta del colegio.' },
       { min: '30–40', momento: 'Puesta en común', detalle: 'Tres alumnos explican al grupo una parte del archivo. El docente corrige y profundiza.' },
       { min: '40–45', momento: 'Cómo lo hice', detalle: 'Cada alumno completa su ficha “Cómo lo hice”: cuatro líneas.' },
     ],
@@ -436,10 +436,35 @@ export const IMPLEMENTACION = [
 ]
 
 export const METRICAS = [
-  { k: 'Club', v: 'Asistencia semanal, número de productos presentados en el Demo Day y productos que pasan a piloto.' },
-  { k: 'Currículo', v: 'Porcentaje del grupo piloto en “Logrado” o “Destacado” en la rúbrica de la unidad 1 de 8.º.' },
-  { k: 'Docentes', v: 'Docentes formados y su valoración de la guía al cierre del trimestre.' },
-  { k: 'Colegio', v: 'Productos del club en uso real por un usuario del colegio.' },
+  { k: 'Builders Club', v: 'Demo Day con al menos 5 productos presentados, y 2 que pasan a piloto con un usuario del colegio.' },
+  { k: 'Piloto en 8.º', v: 'El 80 % del grupo en Logrado o Destacado en el proyecto de la unidad 1, y cada pareja da su mini-clase.' },
+  { k: 'Profesores', v: 'Los profesores del piloto formados antes de arrancar, y su valoración de la guía al cierre del trimestre.' },
+  { k: 'Colegio', v: 'Productos del club en uso real por un departamento al cierre del año.' },
+]
+
+/** Acceso a la IA en dos niveles: arranca sin cuentas para alumnos. */
+export const ACCESO = {
+  idea: 'La propuesta arranca el primer día sin esperar cuentas para los alumnos: el profesor maneja la IA proyectada. Cuando el colegio apruebe una herramienta apta para la edad, cada alumno pasa a usar su propia cuenta del colegio.',
+  niveles: [
+    {
+      nombre: 'Nivel 1 · Desde el primer día',
+      items: ['El profesor maneja la IA proyectada, con su cuenta de adulto.', 'La IA le pregunta al grupo y cada alumno responde en su hoja.', 'Sirve igual para las primeras clases del club.'],
+    },
+    {
+      nombre: 'Nivel 2 · Cuando el colegio lo apruebe',
+      items: ['Cada alumno usa una herramienta educativa apta para su edad.', 'Cuentas del colegio, con supervisión del profesor.', 'Se elige en las dos semanas de preparación.'],
+    },
+  ],
+}
+
+/** Preguntas que la directiva probablemente hará, con su respuesta corta. */
+export const PREGUNTAS = [
+  { q: '¿La IA reemplaza al profesor?', a: 'No. El profesor decide, guía y evalúa. La IA es una herramienta de la clase, como Excel.' },
+  { q: '¿Y si todavía no hay herramienta para los alumnos?', a: 'Se arranca en el nivel 1: el profesor maneja la IA proyectada y el grupo responde. No hay que esperar.' },
+  { q: '¿Cuánto tiempo les pide a los profesores?', a: 'Tres talleres cortos y una guía lista por unidad. Ninguna hora de clase extra: vive dentro de Tecnología.' },
+  { q: '¿Cómo sabemos que el aprendizaje es del alumno?', a: 'Porque lo explica y lo enseña: responde las preguntas de la IA, da mini-clases y presenta en vivo cada proyecto.' },
+  { q: '¿Y las tareas de otras materias?', a: 'Cada materia mantiene sus reglas, igual que trabajos como AP Research. Aquí se aprende a usar la IA para entender y construir.' },
+  { q: '¿Qué hace falta para empezar?', a: 'Un profesor responsable, un horario, un salón y la decisión de hoy.' },
 ]
 
 /** Aprender enseñando: lo que distingue esta propuesta. Los alumnos no solo usan la IA; explican, enseñan y presentan. */

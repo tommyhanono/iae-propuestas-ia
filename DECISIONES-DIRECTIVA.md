@@ -99,3 +99,23 @@ Tommy pidió que la propuesta impresione, en lenguaje más normal, con alumnos q
 28. **Nota:** la ficha "Cómo lo hice" baja a 15 %, prácticas a 25 %, entra la mini-clase con 15 % y el proyecto queda en 45 %. Todo a confirmar.
 29. **Estructura:** 17 láminas (13:35 de tiempo objetivo) y 14 de apéndice. La lámina del portafolio se fusionó con la de 10.º.
 30. **Tailwind y el CSS de `/`:** cualquier palabra en `src/` que coincida con una clase de Tailwind (por ejemplo, el valor que une los bordes de una tabla, escrito en un estilo en línea) se suma al CSS de `/`. Se usan clases propias en vez de esos valores en línea, y se compara el CSS de `/` byte a byte en cada build.
+
+## Cuarta vuelta: cerrar los huecos de lógica (14-oct-2026)
+
+Revisé la propuesta como la va a leer la directiva y cerré las cuatro preguntas que seguramente harán:
+
+31. **"¿Con qué herramienta, si son menores?"** Nueva lámina 15, "Arranca desde el primer día", con el acceso en dos niveles:
+    - Nivel 1: el profesor maneja la IA proyectada con su cuenta de adulto, y los alumnos responden en su hoja. Así funciona la clase de 8.º de la lámina 4.
+    - Nivel 2: cuando el colegio aprueba una herramienta apta para la edad, cada alumno usa una cuenta del colegio.
+    
+    El pedido 3 de la última lámina habla ahora de los dos niveles. Ver la alerta en el reporte.
+32. **"¿Cómo sabremos que funcionó?"** La lámina del plan pasa a "La meta":
+    - Demo Day con al menos 5 productos, y 2 que pasan a piloto;
+    - el 80 % del grupo piloto en Logrado o más, y cada pareja da su mini-clase.
+    
+    Son metas propuestas, marcadas así en pantalla. Estonia queda en las notas.
+33. **"¿La IA reemplaza al profesor? ¿Cuánto tiempo les pide?"** Las preguntas frecuentes (apéndice A12 y documento) suman esas respuestas: el profesor decide, guía y evalúa; tres talleres y ninguna hora extra.
+34. **"¿Qué nos llevamos?"**
+    - Un código QR en la última lámina que abre el currículo completo en el celular. Lo verifiqué leyendo el QR desde la captura de la lámina.
+    - Un **resumen de una página** en `/directiva/resumen/`, que cabe en una hoja carta al imprimir (probado). Está enlazado desde el documento.
+35. La presentación queda en 18 láminas, con 14:25 de tiempo objetivo.

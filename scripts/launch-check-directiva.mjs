@@ -438,6 +438,29 @@ add('1.19', 'Email con mailto:', 'N/A', 'no se publica correo (regla de Tommy)')
   add('D.7', 'Documento: cero errores de consola', errs.length ? 'FAIL' : 'PASS', errs.join(' | '))
 }
 
+// ——— Resumen /directiva/resumen/ ———
+{
+  const RES = '/directiva/resumen/'
+  const { ctx, page, errors } = await pageAt(1100, 900)
+  await page.goto(`${base}${RES}`)
+  await page.waitForLoadState('networkidle')
+  await page.evaluate(() => document.fonts.ready)
+  const title = await page.title()
+  const tl = [...title].length
+  const desc = await page.getAttribute('meta[name="description"]', 'content')
+  const dl = [...(desc ?? '')].length
+  const robots = await page.getAttribute('meta[name="robots"]', 'content')
+  const canonical = await page.getAttribute('link[rel="canonical"]', 'href')
+  add('R.1', 'Resumen: título 50–60, description 120–155, noindex y canonical', tl >= 50 && tl <= 60 && dl >= 120 && dl <= 155 && /noindex/.test(robots ?? '') && canonical === `${PROD}${RES}` ? 'PASS' : 'FAIL', `"${title}" (${tl}) · ${dl} caracteres · ${canonical}`)
+  const pdf = await page.pdf({ format: 'Letter', printBackground: true, preferCSSPageSize: true })
+  const pages = (pdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length
+  add('R.2', 'Resumen: cabe en una hoja carta al imprimir', pages === 1 ? 'PASS' : 'FAIL', `${pages} página(s)`)
+  await page.setViewportSize({ width: 320, height: 800 })
+  const sw = await page.evaluate(() => document.documentElement.scrollWidth)
+  add('R.3', 'Resumen: sin scroll lateral a 320 px y sin errores de consola', sw <= 320 && !errors.length ? 'PASS' : 'FAIL', `${sw}px ${errors.join(' | ')}`)
+  await ctx.close()
+}
+
 await dctx.close()
 await browser.close()
 

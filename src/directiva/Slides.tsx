@@ -470,27 +470,36 @@ function Body({ slide, beat, mode }: ViewProps) {
               </section>
             ))}
           </div>
-          <p className="t-foot">{slide.footnote}</p>
+          <p className="t-foot" style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', alignItems: 'baseline' }}>
+            <span>{slide.footnote}</span>
+            {slide.sources?.map((s) => <Cite key={s} id={s} />)}
+          </p>
         </div>
       )
 
     case 'ask':
       return (
-        <div className="slide-body" style={{ justifyContent: 'center', gap: gap(32, 20), paddingTop: gap(8, 16) }}>
+        <div className="slide-body" style={{ justifyContent: 'center', gap: gap(24, 18), paddingTop: gap(4, 16) }}>
           <ol style={{ listStyle: 'none', padding: 0 }}>
             {slide.decisions.map((d, i) => (
-              <li key={d} className="t-sec" style={{ display: 'flex', gap: gap(24, 12), alignItems: 'baseline', padding: `${gap(14, 10)}px 0`, borderTop: i ? '1px solid rgb(235 238 242 / 0.14)' : undefined }}>
+              <li key={d} className="t-sec" style={{ display: 'flex', gap: gap(24, 12), alignItems: 'baseline', padding: `${gap(10, 10)}px 0`, borderTop: i ? '1px solid rgb(235 238 242 / 0.14)' : undefined }}>
                 <span className="serif tabular strong" style={{ color: 'var(--gold)', minWidth: '1.2em' }}>{i + 1}</span>
                 <span>{d}</span>
               </li>
             ))}
           </ol>
-          <Focal>
-            <div style={{ border: '2px solid var(--gold)', padding: `${gap(24, 14)}px ${gap(32, 16)}px`, background: 'var(--navy-surface)', boxShadow: '0 1px 0 rgb(235 238 242 / 0.06) inset, 0 2px 4px rgb(4 8 16 / 0.4), 0 18px 36px -12px rgb(4 8 16 / 0.6)' }}>
-              <p className="eyebrow">{slide.firstStep.label}</p>
-              <p className="t-body serif strong" style={{ marginTop: gap(8, 4) }}>{slide.firstStep.text}</p>
-            </div>
-          </Focal>
+          <div style={{ display: 'flex', flexDirection: stage ? 'row' : 'column', alignItems: 'stretch', gap: gap(32, 16) }}>
+            <Focal className="ask-step">
+              <div style={{ height: '100%', border: '2px solid var(--gold)', padding: `${gap(20, 14)}px ${gap(28, 16)}px`, background: 'var(--navy-surface)', boxShadow: '0 1px 0 rgb(235 238 242 / 0.06) inset, 0 2px 4px rgb(4 8 16 / 0.4), 0 18px 36px -12px rgb(4 8 16 / 0.6)' }}>
+                <p className="eyebrow">{slide.firstStep.label}</p>
+                <p className="t-body serif strong" style={{ marginTop: gap(8, 4) }}>{slide.firstStep.text}</p>
+              </div>
+            </Focal>
+            <figure style={{ flex: 'none', display: 'flex', flexDirection: stage ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: gap(8, 12) }}>
+              <img src={slide.qr.src} alt={`Código QR: ${slide.qr.label}`} width={gap(150, 112)} height={gap(150, 112)} style={{ width: gap(150, 112), height: gap(150, 112), background: 'var(--paper-surface)', padding: gap(8, 6) }} />
+              <figcaption className="t-foot" style={{ maxWidth: stage ? '11em' : '9em', textAlign: stage ? 'center' : 'left', color: 'var(--navy-muted)' }}>{slide.qr.label}</figcaption>
+            </figure>
+          </div>
           <p className="t-sec serif" style={{ borderLeft: '4px solid var(--gold)', paddingLeft: gap(24, 14), fontStyle: 'italic' }}>{slide.invite}</p>
         </div>
       )
@@ -501,8 +510,8 @@ function Body({ slide, beat, mode }: ViewProps) {
           <dl style={{ margin: 0, display: 'grid', gridTemplateColumns: stage && slide.items.length > 4 ? '1fr 1fr' : '1fr', columnGap: 56 }}>
             {slide.items.map((it, i) => (
               <div key={it.label} style={{ padding: `${gap(14, 10)}px 0`, borderTop: i < (stage && slide.items.length > 4 ? 2 : 1) ? '2px solid var(--ink)' : '1px solid rgb(43 64 102 / 0.2)' }}>
-                <dt className="strong" style={{ fontSize: gap(30, 17), lineHeight: 1.3 }}>{it.label}</dt>
-                <dd className="muted" style={{ margin: 0, fontSize: gap(30, 17), lineHeight: 1.36 }}>{it.text}</dd>
+                <dt className="strong" style={{ fontSize: gap(slide.items.length > 5 ? 26 : 30, 17), lineHeight: 1.3 }}>{it.label}</dt>
+                <dd className="muted" style={{ margin: 0, fontSize: gap(slide.items.length > 5 ? 26 : 30, 17), lineHeight: 1.34 }}>{it.text}</dd>
               </div>
             ))}
           </dl>

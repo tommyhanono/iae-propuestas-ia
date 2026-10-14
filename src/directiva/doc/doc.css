@@ -172,3 +172,47 @@ tbody th { font-weight: 600; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   html { scroll-behavior: auto; }
 }
+
+/* ——— Resumen de una página (/directiva/resumen/), pensado para imprimir en carta ——— */
+.resumen {
+  max-width: 816px; margin: 32px auto; padding: 40px 44px;
+  background: var(--paper-surface);
+  border: 1px solid rgb(43 64 102 / 0.16);
+  box-shadow: var(--shadow-lift);
+  font-size: 15px; line-height: 1.45;
+}
+.resumen h1 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; font-size: 34px; margin: 6px 0 4px; font-variation-settings: "opsz" 144; }
+.resumen h2 { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.2; margin-bottom: 6px; border-bottom: 2px solid var(--gold); padding-bottom: 4px; }
+.resumen .r-h2b { margin-top: 12px; }
+.resumen ul, .resumen ol { padding-left: 18px; margin: 0; }
+.resumen li { margin: 3px 0; }
+.r-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; border-bottom: 1px solid rgb(43 64 102 / 0.25); padding-bottom: 14px; }
+.r-head img { width: 150px; flex: none; }
+.r-by { color: var(--ink-muted); font-size: 14px; }
+.r-lead { font-size: 16px; margin: 14px 0; padding-left: 14px; border-left: 4px solid var(--gold); }
+.r-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 14px; }
+.r-ask { margin-top: 16px; padding: 14px 18px; background: var(--navy); color: var(--navy-text); }
+.r-ask h2 { color: var(--navy-text); }
+.r-ask p { margin-top: 8px; }
+.r-foot { display: flex; align-items: center; gap: 16px; margin-top: 16px; font-size: 13px; color: var(--ink-muted); }
+.r-foot p { min-width: 0; overflow-wrap: anywhere; }
+.r-foot img { width: 88px; height: 88px; flex: none; }
+@media (max-width: 640px) {
+  .resumen { margin: 0; padding: 24px 20px; border: 0; box-shadow: none; font-size: 16px; }
+  .r-head { flex-direction: column-reverse; }
+  .r-cols { grid-template-columns: 1fr; }
+}
+@media print {
+  @page { size: letter; margin: 0.35in 0.45in; }
+  .resumen { margin: 0; max-width: none; border: 0; box-shadow: none; padding: 0; font-size: 9.2pt; line-height: 1.32; }
+  .resumen h1 { font-size: 20pt; }
+  .resumen h2 { font-size: 11pt; }
+  .r-lead { font-size: 9.6pt; margin: 8px 0; }
+  .r-cols { margin-top: 8px; gap: 18px; }
+  .r-head { padding-bottom: 8px; }
+  .r-head img { width: 120px; }
+  .r-ask { margin-top: 10px; padding: 10px 14px; }
+  .r-foot { margin-top: 10px; }
+  .r-foot img { width: 72px; height: 72px; }
+  .r-ask { break-inside: avoid; }
+}

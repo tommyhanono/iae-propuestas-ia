@@ -25,6 +25,8 @@ function Portal({ world, float }: { world: 'bc' | 'cu'; float: string }) {
         >
           <span className={`portal-ring ${compact ? '' : float}`} aria-hidden>
             <span className="spin" />
+            <span className="orbit" />
+            <span className="orbit slow" />
             <span className="core" />
             <span className="absolute inset-0 flex items-center justify-center text-acc-soft">
               <Svg name={info.glyph} size={compact ? 40 : 58} stroke={1.4} />

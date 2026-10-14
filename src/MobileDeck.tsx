@@ -66,14 +66,14 @@ export default function MobileDeck({ index, notesOpen, onNext, onPrev, onSettled
               style={{ position: 'relative', borderRadius: 22 }}
               custom={dir}
               variants={{
-                enter: (d: number) => (reduced ? { opacity: 0 } : { opacity: 0, scale: 0.9, x: d * 40 }),
-                center: { opacity: 1, scale: 1, x: 0 },
-                exit: (d: number) => (reduced ? { opacity: 0 } : { opacity: 0, scale: 0.92, x: d * -40 }),
+                enter: (d: number) => (reduced ? { opacity: 0 } : { opacity: 0, rotateY: d * 55, x: d * 70, scale: 0.86, transformPerspective: 1100 }),
+                center: { opacity: 1, rotateY: 0, x: 0, scale: 1, transformPerspective: 1100 },
+                exit: (d: number) => (reduced ? { opacity: 0 } : { opacity: 0, rotateY: d * -55, x: d * -70, scale: 0.86, transformPerspective: 1100 }),
               }}
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: reduced ? 0.18 : 0.32, ease: [0.22, 0.9, 0.3, 1] }}
+              transition={{ duration: reduced ? 0.18 : 0.42, ease: [0.22, 0.9, 0.3, 1] }}
               onAnimationComplete={(def) => { if (def === 'center') { setRun(true); onSettled(true) } }}
             >
               <StageCtx.Provider value={{ run, compact: true }}>

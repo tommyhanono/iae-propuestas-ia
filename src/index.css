@@ -194,7 +194,79 @@ body {
 
 }
 
+@layer components {
+/* ——— 3D: la escena nunca queda quieta ——— */
+.sway { animation: sway 18s ease-in-out infinite; }
+.sway.sway-map { animation: sway-map 24s ease-in-out infinite; }
+@keyframes sway {
+  0%, 100% { transform: rotateX(0deg) rotateY(0deg); }
+  25% { transform: rotateX(0.7deg) rotateY(-1deg); }
+  50% { transform: rotateX(0deg) rotateY(0.9deg); }
+  75% { transform: rotateX(-0.6deg) rotateY(-0.4deg); }
+}
+@keyframes sway-map {
+  0%, 100% { transform: rotateZ(0deg) rotateX(0deg); }
+  33% { transform: rotateZ(1.3deg) rotateX(1.4deg); }
+  66% { transform: rotateZ(-1.1deg) rotateX(-1deg); }
+}
+.twinkle-a { animation: twinkle 5.5s ease-in-out infinite; }
+.twinkle-b { animation: twinkle 7s ease-in-out -2s infinite; }
+.twinkle-c { animation: twinkle 9s ease-in-out -4s infinite; }
+@keyframes twinkle { 50% { opacity: 0.45; } }
+
+.flow-bc { animation: flow-bc 2.6s linear infinite; }
+@keyframes flow-bc { to { stroke-dashoffset: -190; } }
+.flow-cu { animation: flow-cu 4.5s linear infinite; }
+.flow-bc-mini { animation: flow-bc-mini 2.4s linear infinite; }
+@keyframes flow-bc-mini { to { stroke-dashoffset: -330; } }
+.minimap-tilt { animation: minimap 9s ease-in-out infinite; }
+@keyframes minimap { 0%, 100% { transform: rotateX(50deg) rotateZ(-6deg) scale(1.15); } 50% { transform: rotateX(44deg) rotateZ(4deg) scale(1.15); } }
+@keyframes flow-cu { to { stroke-dashoffset: -1860; } }
+
+.floor-shadow { position: absolute; border-radius: 60px; background: radial-gradient(closest-side, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.25) 60%, transparent); box-shadow: 0 0 180px 40px rgb(var(--acc-rgb) / 0.12); }
+.stem { position: absolute; width: 14px; transform-origin: 50% 0; transform: rotateX(90deg); background: linear-gradient(180deg, rgb(var(--acc-rgb) / 0.15), rgb(var(--acc-rgb) / 0.95)); box-shadow: 0 0 40px rgb(var(--acc-rgb) / 0.8); border-radius: 7px; }
+
+.sky { position: absolute; left: 0; top: 0; transform-style: preserve-3d; pointer-events: none; }
+.sky-dot { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; }
+.sky-dot i { position: absolute; display: block; opacity: 0; transition: opacity .6s ease; animation: wave 3.2s ease-in-out infinite; }
+.sky.on .sky-dot i { opacity: 1; }
+.sky-dot i.brick { width: 64px; height: 64px; left: -32px; top: -32px; background: linear-gradient(135deg, #f4dda0, #c8a24b); transform: rotate(45deg); border-radius: 10px; box-shadow: 0 0 40px rgb(200 162 75 / 0.9); }
+.sky-dot i.rung { width: 150px; height: 26px; left: -75px; top: -13px; background: linear-gradient(90deg, rgb(111 184 232 / 0.2), #cfeafb, rgb(111 184 232 / 0.2)); border-radius: 13px; box-shadow: 0 0 36px rgb(111 184 232 / 0.9); }
+@keyframes wave {
+  0%, 70%, 100% { filter: brightness(0.75); scale: 1; }
+  80% { filter: brightness(1.8); scale: 1.7; }
+}
+
+.burst-ring { position: absolute; left: -260px; top: -260px; width: 520px; height: 520px; border-radius: 9999px; border: 14px solid var(--acc); box-shadow: 0 0 80px var(--acc), inset 0 0 60px var(--acc); }
+
+/* Halo que late detrás del nodo activo, y un aro de luz que recorre el borde al llegar */
+.node .aura { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; box-shadow: 0 0 140px 20px rgb(var(--acc-rgb) / 0.35); transition: opacity .8s ease; }
+.node[data-active] .aura { opacity: 1; animation: aura 5s ease-in-out infinite; }
+@keyframes aura { 50% { box-shadow: 0 0 190px 40px rgb(var(--acc-rgb) / 0.5); } }
+.node::before {
+  content: ""; position: absolute; inset: -3px; border-radius: 31px; padding: 3px; pointer-events: none; opacity: 0; z-index: 2;
+  background: conic-gradient(from var(--sweep), transparent 0 62%, rgb(var(--acc-rgb) / 0.25) 75%, var(--acc-soft) 88%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.node[data-active]::before { animation: sweep 2.2s cubic-bezier(.3,.1,.2,1) .15s 1 both; }
+@keyframes sweep { 0% { --sweep: 0deg; opacity: 0; } 12% { opacity: 1; } 85% { opacity: 1; } 100% { --sweep: 720deg; opacity: 0; } }
+.map-current { animation: current 1.8s ease-in-out infinite; }
+@keyframes current { 50% { opacity: 0.45; scale: 1.03; } }
+
+/* Portales: una partícula en órbita y un giro más rápido al pasar el mouse */
+.portal-ring .orbit { position: absolute; inset: -6%; border-radius: 9999px; animation: spin 6s linear infinite; }
+.portal-ring .orbit::after { content: ""; position: absolute; left: 50%; top: 0; width: 12px; height: 12px; margin-left: -6px; border-radius: 9999px; background: var(--acc-soft); box-shadow: 0 0 18px 4px var(--acc); }
+.portal-ring .orbit.slow { inset: 6%; animation-duration: 10s; animation-direction: reverse; }
+.portal:hover .spin { animation-duration: 3s; }
+.portal:hover { transform: perspective(900px) rotateX(6deg) translateY(-6px); }
+}
+
+@property --sweep { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
 @media (prefers-reduced-motion: reduce) {
-  .canvas-bg .glow, .portal-ring .spin, .float { animation: none !important; }
+  .canvas-bg .glow, .portal-ring .spin, .portal-ring .orbit, .float, .sway, .aura, .map-current, .sky-dot i { animation: none !important; }
+  .node::before { display: none; }
+  .portal:hover { transform: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; }
 }

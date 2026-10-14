@@ -148,3 +148,17 @@ export const ACCENT: Record<World, string> = {
   bc: '#C8A24B',
   cu: '#6FB8E8',
 }
+
+// ——— 3D ———
+/** Inclinación y giro de la cámara en el mapa (grados). */
+export const MAP_PITCH = 52
+export const MAP_ROT = -4
+/** Distancia de perspectiva de la escena (px de pantalla). */
+export const PERSPECTIVE = 1400
+/**
+ * Altura de cada nodo sobre el piso en el mapa (unidades de mundo).
+ * Builders Club sube como rampa suave; el Currículo sube en escalones grandes (8vo → 10mo).
+ */
+export const LIFT: number[] = NODES.map((n) =>
+  n.world === 'lobby' ? 320 : n.world === 'bc' ? 460 + n.n * 85 : 420 + (n.n - 1) * 240,
+)

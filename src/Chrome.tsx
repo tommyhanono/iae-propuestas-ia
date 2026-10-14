@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
-import { COUNT, LOBBY, NODES, RANGE, WORLDS } from './data'
+import { ACCENT, COUNT, LOBBY, NODES, RANGE, WORLDS } from './data'
+import { MAP_BOUNDS, chainControls, controlsToPath } from './lib/geometry'
+import { useReduced } from './lib/useReduced'
 import { Svg } from './components/primitives'
 
 interface Props {
@@ -145,6 +147,7 @@ function MobileMap({ open, index, go, close }: { open: boolean; index: number; g
               <span className="font-display text-[22px] font-semibold">Mapa</span>
               <button className="btn" onClick={close} aria-label="Cerrar mapa"><Svg name="x" /></button>
             </div>
+            <MiniMap index={index} />
             <button data-map-node="lobby" onClick={() => go(LOBBY)} className={`mb-3 flex min-h-12 w-full items-center gap-3 rounded-xl border px-3 text-left ${index === LOBBY ? 'border-silver/60 bg-ink-3' : 'border-white/10 bg-ink-2/60'}`}>
               <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full border-2 border-silver/70" aria-hidden />
               <span className="text-[15px]">Lobby</span>
@@ -204,5 +207,49 @@ function Help({ open, close }: { open: boolean; close: () => void }) {
         </motion.div>
       )}
     </AnimatePresence>
+  )
+}
+
+/** Mini mesa 3D para el celular: los dos caminos inclinados, con un pulso que recorre cada uno. */
+function MiniMap({ index }: { index: number }) {
+  const reduced = useReduced()
+  const b = MAP_BOUNDS
+  const L = NODES[LOBBY]
+  const route = (w: 'bc' | 'cu') => {
+    const side = w === 'bc' ? -1 : 1
+    const pts = [{ x: L.x + side * (L.w / 2), y: L.y - 200 }, ...NODES.filter((n) => n.world === w).map((n) => ({ x: n.x, y: n.y })), { x: L.x + side * (L.w / 2), y: L.y + 240 }]
+    return controlsToPath(chainControls(pts))
+  }
+  const paths = { bc: route('bc'), cu: route('cu') }
+  return (
+    <div aria-hidden className="mb-4 overflow-hidden rounded-2xl border border-white/10 bg-ink/60" style={{ perspective: 700 }}>
+      <div className={reduced ? '' : 'minimap-tilt'} style={{ transform: 'rotateX(50deg) rotateZ(-6deg) scale(1.15)', transformOrigin: '50% 55%' }}>
+        <svg viewBox={`${b.left} ${b.top} ${b.width} ${b.height}`} className="block h-auto w-full">
+          <defs>
+            <pattern id="mgrid" width="600" height="600" patternUnits="userSpaceOnUse"><path d="M600 0H0V600" fill="none" stroke="#D9DEE7" strokeOpacity="0.12" strokeWidth="14" /></pattern>
+          </defs>
+          <rect x={b.left} y={b.top} width={b.width} height={b.height} fill="url(#mgrid)" />
+          <path d={paths.bc} fill="none" stroke={ACCENT.bc} strokeWidth="130" strokeOpacity="0.9" strokeDasharray="220 110" className={reduced ? '' : 'flow-bc-mini'} />
+          <path d={paths.cu} fill="none" stroke={ACCENT.cu} strokeWidth="170" strokeOpacity="0.9" />
+          <path d={paths.cu} fill="none" stroke="#10151F" strokeWidth="110" />
+          <path d={paths.cu} fill="none" stroke={ACCENT.cu} strokeWidth="170" strokeDasharray="30 150" />
+          {NODES.map((n, i) => (
+            <g key={n.key}>
+              <circle cx={n.x} cy={n.y} r={i === index ? 460 : 330} fill={n.world === 'lobby' ? '#EFEAE0' : ACCENT[n.world]} stroke="#10151F" strokeWidth="60" />
+              <text x={n.x} y={n.y + 150} textAnchor="middle" fontSize="420" fontWeight="700" fill="#10151F" fontFamily="Fraunces, Georgia, serif">{n.world === 'lobby' ? '' : n.n}</text>
+            </g>
+          ))}
+          {!reduced && (['bc', 'cu'] as const).map((w) => (
+            <circle key={w} r="220" fill="#FFFFFF" style={{ filter: `drop-shadow(0 0 120px ${ACCENT[w]})` }}>
+              <animateMotion dur={w === 'bc' ? '6s' : '8s'} repeatCount="indefinite" path={paths[w]} />
+            </circle>
+          ))}
+        </svg>
+      </div>
+      <div className="flex justify-between px-3 pb-2 text-[11px] font-semibold uppercase tracking-[0.14em]">
+        <span className="text-gold">Builders Club · rampa</span>
+        <span className="text-cian">Currículo · escalera</span>
+      </div>
+    </div>
   )
 }

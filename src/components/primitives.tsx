@@ -20,11 +20,11 @@ const EASE = [0.22, 0.9, 0.3, 1] as const
 
 export const groupV: Variants = {
   hidden: { transition: { staggerChildren: 0.02, staggerDirection: -1 } },
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.04 } },
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
 }
 export const itemV: Variants = {
-  hidden: { opacity: 0, y: 16, filter: 'blur(4px)', transition: { duration: 0.15 } },
-  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.5, ease: EASE } },
+  hidden: { opacity: 0, y: 34, rotateX: -32, scale: 0.97, filter: 'blur(6px)', transformPerspective: 900, transition: { duration: 0.15 } },
+  show: { opacity: 1, y: 0, rotateX: 0, scale: 1, filter: 'blur(0px)', transformPerspective: 900, transition: { duration: 0.7, ease: EASE } },
 }
 
 type Box = { children?: ReactNode; className?: string; style?: React.CSSProperties }

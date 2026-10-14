@@ -1,5 +1,7 @@
 // Contenido de la presentación para la directiva: titulares, cuerpo, notas del orador y fuentes.
 // Todo lo que se lee en pantalla vive aquí. scripts/content-check-directiva.mjs lo revisa antes de cada build.
+// El detalle completo del currículo y del club vive en curriculo.ts y se reutiliza en el apéndice.
+import { CLUB, FORMACION, GRADES } from './curriculo.ts'
 
 export type Tone = 'navy' | 'paper'
 
@@ -67,6 +69,8 @@ interface Base {
   /** Guion hablado, en primera persona, a "ustedes". */
   notes: string
   sources?: SourceId[]
+  /** Las cifras de la lámina son de la propia propuesta (pesos de rúbrica, semanas), no datos externos. */
+  ownFigures?: true
 }
 
 export type Slide = Base & (
@@ -74,7 +78,7 @@ export type Slide = Base & (
   | { layout: 'stat'; value: string; unit: string; label: string; line: string }
   | { layout: 'floorCeiling'; floor: { label: string; detail: string }; ceiling: { label: string; detail: string }; link: string }
   | { layout: 'steps'; steps: { grade: string; verb: string; line: string }[]; note: string }
-  | { layout: 'table'; columns: string[]; rows: string[][]; beats: number[][]; footnote?: string }
+  | { layout: 'table'; columns: string[]; rows: string[][]; beats: number[][]; footnote?: string; callout?: string }
   | { layout: 'portfolio'; items: { grade: string; piece: string }[]; line: string }
   | { layout: 'statement'; lead: string; quote: string; attribution: string }
   | { layout: 'timeline'; stations: { n: string; title: string; out: string }[]; beats: number[][]; line: string }
@@ -82,7 +86,7 @@ export type Slide = Base & (
   | { layout: 'evidence'; items: { claim: string; detail: string; source: SourceId }[] }
   | { layout: 'pledges'; items: { label: string; text: string }[]; footnote: string }
   | { layout: 'twoCols'; left: { label: string; items: string[] }; right: { label: string; items: string[] }; footnote: string }
-  | { layout: 'ask'; decisions: string[]; firstStep: { label: string; text: string }; presenter: string }
+  | { layout: 'ask'; decisions: string[]; firstStep: { label: string; text: string }; presenter: string; more: string }
   | { layout: 'list'; items: { label: string; text: string }[]; footnote?: string }
   | { layout: 'sources' }
 )
@@ -118,7 +122,7 @@ export const SLIDES: Slide[] = [
     notes: 'Son dos propuestas y una sola progresión. El currículo es la base: llega a todos, de 8.º a 10.º. El club es voluntario, de 9.º a 11.º, para quien quiere seguir construyendo. Una no reemplaza a la otra. Empiezo por el currículo porque es la base.',
   },
   {
-    id: 'progresion', section: 'Currículo', tone: 'paper', layout: 'steps', time: '1:00',
+    id: 'progresion', section: 'Currículo', tone: 'paper', layout: 'steps', time: '0:45',
     title: 'En tres años, cada alumno pasa de leer a pedir a crear.',
     steps: [
       { grade: '8.º', verb: 'Leer', line: 'Entiende cómo está hecho un archivo real.' },
@@ -130,17 +134,43 @@ export const SLIDES: Slide[] = [
     notes: 'El currículo tiene una progresión simple. En 8.º aprenden a leer cómo está hecho un archivo. En 9.º aprenden a pedir bien. En 10.º crean algo propio. No me la inventé de la nada: el marco de competencias en IA que la UNESCO publicó en 2024 usa la misma idea, en tres niveles, comprender, aplicar y crear.',
   },
   {
-    id: 'clases', section: 'Currículo', tone: 'paper', layout: 'table', time: '1:15',
-    title: 'Cada año cierra con un entregable que se puede revisar.',
-    columns: ['Año', 'Así se trabaja en clase', 'Entregable'],
+    id: 'octavo', section: 'Currículo', tone: 'paper', layout: 'table', time: '0:50',
+    title: 'En 8.º, cada alumno aprende a leer cualquier archivo.',
+    columns: ['Trimestre', 'Unidad', 'Lo que logra el alumno'],
     rows: [
-      ['8.º', 'La IA pregunta y el alumno responde: qué hay en A5, qué hace esta fórmula.', 'Leer y explicar un Excel real.'],
-      ['9.º', 'La forma del prompt cambia el producto: pasos claros, resultado claro.', 'Un Excel construido desde un prompt bien estructurado.'],
-      ['10.º', 'Crean herramientas y sistemas propios, por ejemplo para un club.', 'Un producto terminado en su portafolio.'],
+      ['1', 'Leer una hoja de cálculo', 'Explica celdas, rangos, tipos de datos y sus primeras fórmulas.'],
+      ['2', 'Fórmulas que deciden', 'Entiende SI, CONTAR.SI, BUSCARV y qué dice cada mensaje de error.'],
+      ['3', 'Cómo se conecta todo', 'Sigue un dato entre hojas y gráficos; lee documentos y presentaciones.'],
     ],
-    beats: [[0], [1], [2]],
-    footnote: 'Aplica igual a Word y PowerPoint. Los ejemplos de prompts por año están en el apéndice A2.',
-    notes: 'Así se vive una clase. En 8.º el método es al revés de lo normal: el profesor da un prompt, el alumno se lo pasa a la IA conectada a Excel, y es la IA la que le pregunta a él. Qué hay en A5, qué hace esta fórmula. Aprende respondiendo. En 9.º pasan a pedir: aprenden que la forma del prompt cambia el producto, y construyen ellos el Excel. En 10.º crean algo que sirve, como el sistema de un club que pasó de idea a una hoja que todos usan. Cada año deja un entregable que el profesor puede revisar.',
+    beats: [[0, 1, 2]],
+    callout: 'Entregable: lee y explica un Excel real del colegio en 7 minutos.',
+    notes: 'En 8.º el método es al revés de lo normal. El profesor entrega un prompt, el alumno se lo pasa a la IA, y es la IA la que le pregunta a él: qué hay en A5, qué hace esta fórmula. El alumno verifica en la hoja antes de responder. Son tres unidades, una por trimestre: leer una hoja, entender fórmulas que deciden, y ver cómo se conecta todo, incluidos Word y PowerPoint. Al final del año lee y explica un Excel real del colegio en siete minutos, y se evalúa con una rúbrica de cuatro niveles. Las 30 sesiones, una por una, están en el documento del currículo completo.',
+  },
+  {
+    id: 'noveno', section: 'Currículo', tone: 'paper', layout: 'table', time: '0:50',
+    title: 'En 9.º, aprende a pedir bien y construye con lo que pide.',
+    columns: ['Trimestre', 'Unidad', 'Lo que logra el alumno'],
+    rows: [
+      ['1', 'Anatomía de un buen pedido', 'Escribe prompts de cinco partes que otro grupo ejecuta sin preguntas.'],
+      ['2', 'Construir un Excel desde un prompt', 'Construye por pasos, prueba con datos y documenta cómo se usa.'],
+      ['3', 'El producto del año', 'Excel, informe y presentación para un encargo real del colegio.'],
+    ],
+    beats: [[0, 1, 2]],
+    callout: 'Entregable: un Excel construido desde un prompt bien estructurado, con su bitácora de versiones.',
+    notes: 'En 9.º pasan de responder a pedir. El primer trimestre aprenden las cinco partes de un buen prompt: contexto, objetivo, pasos, formato y criterios de revisión. La prueba es dura: otro grupo ejecuta su prompt tal cual, sin preguntarles nada. El segundo trimestre construyen un Excel por pasos, dando visto bueno en cada uno y probando con datos. El tercero hacen el producto del año para un encargo real del colegio, como la tabla de un torneo o el control de un club. Entregan el archivo, el prompt y la bitácora de cada corrección.',
+  },
+  {
+    id: 'decimo', section: 'Currículo', tone: 'paper', layout: 'table', time: '0:50',
+    title: 'En 10.º, crea un producto que alguien del colegio usa de verdad.',
+    columns: ['Trimestre', 'Unidad', 'Lo que logra el alumno'],
+    rows: [
+      ['1', 'De la necesidad al diseño', 'Entrevista a un usuario del colegio y diseña el producto en una ficha.'],
+      ['2', 'Construir y probar', 'Construye dos versiones y las prueba con usuarios reales.'],
+      ['3', 'Lanzar y presentar', 'Lo pone en uso dos semanas y lo presenta ante un panel de docentes.'],
+    ],
+    beats: [[0, 1, 2]],
+    callout: 'Entregable: un producto terminado, con evidencia de uso, en su portafolio.',
+    notes: 'En 10.º crean. El primer trimestre cada alumno, solo o en pareja, entrevista a un usuario del colegio, un profesor, un club o un departamento, y diseña su producto en una ficha de una página antes de construir. El segundo trimestre construyen dos versiones y las prueban con usuarios reales. El tercero lo ponen en uso dos semanas, miden si sirve y lo presentan ante un panel de docentes. Un ejemplo real: un sistema de club que empezó como idea y terminó en una hoja que todos usan.',
   },
   {
     id: 'portafolio', section: 'Currículo', tone: 'paper', layout: 'portfolio', time: '0:30',
@@ -208,7 +238,7 @@ export const SLIDES: Slide[] = [
       { label: 'Supervisión', text: 'Un docente enlace acompaña. Acceso institucional, con herramientas aptas para su edad.' },
       { label: 'Datos', text: 'Sin datos personales en los prompts. Consentimiento de los acudientes y principios de la Ley 81 de 2019.' },
     ],
-    footnote: 'Detalle en los apéndices A3 y A4.',
+    footnote: 'Detalle en los apéndices A8 y A9.',
     sources: ['ley81', 'anthropic'],
     notes: 'Sé que la primera pregunta de un colegio es cómo se cuida esto. Tres compromisos. Integridad: las reglas se hablan con los miembros desde el primer día, y como cada producto se presenta y se explica en vivo, el trabajo se ve. En un club que construye no hay nada que copiar: el producto no existe hasta que alguien lo hace. Supervisión: un docente enlace acompaña, y el acceso es institucional, con herramientas aptas para la edad y dentro de los términos de cada proveedor. Datos: en los prompts no van datos personales, y seguimos los principios de la Ley 81, finalidad, proporcionalidad, seguridad y consentimiento.',
   },
@@ -249,6 +279,7 @@ export const SLIDES: Slide[] = [
     ],
     firstStep: { label: 'Primer paso, en las próximas dos semanas', text: 'Nombrar un docente enlace y fijar el horario de la primera clase.' },
     presenter: 'Thomas Hanono · Builders Club',
+    more: 'El currículo completo, semana por semana: iae-propuestas-ia.vercel.app/directiva/curriculo',
     notes: 'Cierro con lo que les pido hoy. Tres decisiones: aprobar el currículo empezando con un grupo piloto de 8.º, aprobar el club con sus seis clases, y respaldar el acceso supervisado a herramientas de IA aptas para la edad de los estudiantes. Y un primer paso, chico y con fecha: en las próximas dos semanas, nombrar un docente enlace y fijar el horario de la primera clase. Dejo esta lámina proyectada mientras conversamos. Quedo a la orden para sus preguntas.',
   },
 
@@ -267,19 +298,43 @@ export const SLIDES: Slide[] = [
     footnote: 'A futuro, como posibilidad: charlistas invitados y una versión del club para profesores.',
     notes: 'Si preguntan por el detalle de las clases, aquí está una por una. A futuro hay dos ideas abiertas, como posibilidad: charlistas invitados y una versión para profesores.',
   },
+  ...GRADES.map((g, i): Slide => ({
+    id: `A${i + 2}`, section: 'Apéndice', tone: 'paper', layout: 'table', time: '0:00',
+    title: `Rúbrica de ${g.grado}`,
+    columns: ['Criterio', 'Peso', 'Nivel Logrado'],
+    ownFigures: true,
+    rows: g.rubrica.map((r) => [r.criterio, r.peso, r.niveles[2]]),
+    beats: [g.rubrica.map((_, i) => i)],
+    footnote: `${g.entregable.nombre}. Niveles completos en el currículo completo.`,
+    notes: `Si preguntan cómo se evalúa ${g.grado}: esta es la rúbrica del entregable del año, con el nivel Logrado de cada criterio.`,
+  })),
   {
-    id: 'A2', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
+    id: 'A5', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
     title: 'Ejemplos de prompts por año',
     items: [
-      { label: '8.º · Leer', text: '"Hazme preguntas, una por una, sobre esta hoja de cálculo hasta que pueda explicar qué hace cada columna. No me des las respuestas."' },
-      { label: '9.º · Pedir', text: '"Construye conmigo una hoja de asistencia en tres pasos: primero las columnas, después las fórmulas, al final el formato. Espera mi visto bueno en cada paso."' },
-      { label: '10.º · Crear', text: '"Quiero un sistema para inscribir miembros de un club. Antes de construir, hazme las preguntas que necesitas para entender a quién le sirve."' },
+      { label: '8.º · Leer', text: '“Hazme preguntas, una por una, sobre esta hoja de cálculo hasta que pueda explicar qué hace cada columna. No me des las respuestas.”' },
+      { label: '9.º · Pedir', text: '“Construye conmigo una hoja de asistencia en tres pasos: primero las columnas, después las fórmulas, al final el formato. Espera mi visto bueno en cada paso.”' },
+      { label: '10.º · Crear', text: '“Quiero un sistema para inscribir miembros de un club. Antes de construir, hazme las preguntas que necesitas para entender a quién le sirve.”' },
     ],
     footnote: 'En los tres años, la IA guía y pregunta; el alumno decide y explica.',
     notes: 'Tres ejemplos de cómo se ve un prompt en cada año. Fíjense que en los tres la IA pregunta o espera el visto bueno del alumno.',
   },
   {
-    id: 'A3', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
+    id: 'A6', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
+    title: 'Formación docente antes de arrancar',
+    items: FORMACION.slice(0, 4).map((f) => ({ label: f.k, text: f.v })),
+    footnote: FORMACION[4].v,
+    notes: 'Si preguntan cómo se prepara a los docentes: tres talleres cortos y una guía por unidad con las diez sesiones, sus prompts, los archivos de práctica y la rúbrica.',
+  },
+  {
+    id: 'A7', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
+    title: 'Cómo un producto del club llega a usarse en el colegio',
+    items: CLUB.camino.map((c) => ({ label: c.k, text: c.v })),
+    footnote: 'Después del primer Demo Day, el club trabaja en ciclos de seis semanas.',
+    notes: 'Si preguntan cómo se decide qué producto usa el colegio: pasa por una ficha, la revisión del docente enlace, un piloto de dos semanas y una presentación a la coordinación, que decide.',
+  },
+  {
+    id: 'A8', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
     title: 'Acceso supervisado y términos del proveedor',
     items: [
       { label: 'Qué pedimos', text: 'Respaldo institucional para usar herramientas de IA aptas para su edad, con cuentas del colegio y un docente enlace.' },
@@ -291,7 +346,7 @@ export const SLIDES: Slide[] = [
     notes: 'Si preguntan por el acceso: pedimos respaldo institucional, no cuentas personales. Cada proveedor pone sus condiciones de edad, y elegimos la herramienta que las cumple. Por ejemplo, Anthropic pide 18 años para sus cuentas personales y, para menores, contempla productos de organizaciones con salvaguardas. Esa elección se hace en las dos semanas de preparación.',
   },
   {
-    id: 'A4', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
+    id: 'A9', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
     title: 'Datos personales: prácticas que seguimos',
     items: [
       { label: 'Finalidad y proporcionalidad', text: 'Solo se usa lo necesario para aprender. En los prompts no se ingresan nombres, notas ni datos personales de nadie.' },
@@ -303,7 +358,7 @@ export const SLIDES: Slide[] = [
     notes: 'Si preguntan por datos personales: seguimos los principios de la Ley 81, finalidad, proporcionalidad, seguridad, transparencia y consentimiento. No es una opinión legal; son las prácticas que nos comprometemos a seguir.',
   },
   {
-    id: 'A5', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
+    id: 'A10', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
     title: 'Preguntas frecuentes',
     items: [
       { label: '¿Cómo sabemos que el aprendizaje es del alumno?', text: 'Porque lo explica: en 8.º responde las preguntas de la IA y en el Demo Day presenta y defiende su producto.' },
@@ -314,7 +369,7 @@ export const SLIDES: Slide[] = [
     notes: 'Preguntas que es probable que salgan, con su respuesta corta.',
   },
   {
-    id: 'A6', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
+    id: 'A11', section: 'Apéndice', tone: 'paper', layout: 'list', time: '0:00',
     title: 'Cronograma detallado, en semanas',
     items: [
       { label: 'Semanas 1 y 2', text: 'Docente enlace nombrado, herramienta apta elegida, horario y salón definidos, aviso a los acudientes.' },
@@ -326,7 +381,7 @@ export const SLIDES: Slide[] = [
     notes: 'El cronograma en semanas. Las fechas las fijamos con la coordinación según el calendario del colegio.',
   },
   {
-    id: 'A7', section: 'Apéndice', tone: 'paper', layout: 'sources', time: '0:00',
+    id: 'A12', section: 'Apéndice', tone: 'paper', layout: 'sources', time: '0:00',
     title: 'Fuentes',
     notes: 'Todas las fuentes, con su enlace. El detalle de cada cita está en el repositorio, en FUENTES-DIRECTIVA.md.',
   },

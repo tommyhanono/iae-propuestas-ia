@@ -53,7 +53,7 @@ async function go(page, hash = '1') {
     }
     await ctx.close()
   }
-  add('1.1', 'Cero scroll horizontal a 320, 375 y 414 px (21 láminas)', fails.length ? 'FAIL' : 'PASS', fails.join(' | '))
+  add('1.1', `Cero scroll horizontal a 320, 375 y 414 px (${SLIDES.length} láminas)`, fails.length ? 'FAIL' : 'PASS', fails.join(' | '))
 }
 
 const { ctx: dctx, page: dp, errors: consoleErrors } = await pageAt(1366, 768)
@@ -105,7 +105,7 @@ for (const [i] of SLIDES.entries()) await go(dp, hashOf(i))
     const got = Number(await p.getAttribute('[data-app]', 'data-index'))
     if (got !== i) wrong.push(`${i}→${got}`)
   }
-  add('1.15', 'Cero items de navegación que no llevan a nada (21 entradas del índice)', wrong.length ? 'FAIL' : 'PASS', wrong.join(', '))
+  add('1.15', `Cero items de navegación que no llevan a nada (${SLIDES.length} entradas del índice)`, wrong.length ? 'FAIL' : 'PASS', wrong.join(', '))
 }
 
 {
@@ -176,10 +176,10 @@ add('1.13', 'Errores con mensaje útil', 'N/A', 'no hay acciones que puedan fall
     const m = t.match(PH) ?? t.match(PH_CASE)
     if (m) domHits.push(`#/${hashOf(i)}: "${m[0]}"`)
   }
-  const files = ['directiva/index.html', ...readdirSync('src/directiva').map((f) => join('src/directiva', f))]
+  const files = ['directiva/index.html', 'directiva/curriculo/index.html', ...readdirSync('src/directiva', { recursive: true }).map((f) => join('src/directiva', String(f))).filter((f) => statSync(f).isFile())]
   const srcHits = []
   for (const f of files) readFileSync(f, 'utf8').split('\n').forEach((line, n) => { if ((PH.test(line) || PH_CASE.test(line)) && !/un placeholder no es/.test(line)) srcHits.push(`${f}:${n + 1}`) })
-  add('1.14', 'Cero texto placeholder (DOM de 21 láminas y fuente)', domHits.length || srcHits.length ? 'FAIL' : 'PASS', [...domHits, ...srcHits].join(' | '))
+  add('1.14', `Cero texto placeholder (DOM de ${SLIDES.length} láminas y fuente)`, domHits.length || srcHits.length ? 'FAIL' : 'PASS', [...domHits, ...srcHits].join(' | '))
 }
 
 {
@@ -210,8 +210,8 @@ add('1.19', 'Email con mailto:', 'N/A', 'no se publica correo (regla de Tommy)')
   const refs = readdirSync('dist/assets').filter((f) => f.endsWith('.js') && /sourceMappingURL/.test(readFileSync(join('dist/assets', f), 'utf8')))
   add('2.2', 'Sin source maps en producción', maps.length || refs.length ? 'FAIL' : 'PASS', `build.sourcemap=false; ${maps.length} .map, ${refs.length} referencias`)
   const logs = []
-  for (const f of readdirSync('src/directiva')) readFileSync(join('src/directiva', f), 'utf8').split('\n').forEach((l, n) => { if (/console\.(log|debug|info)/.test(l)) logs.push(`src/directiva/${f}:${n + 1}`) })
-  add('2.3', 'Cero errores de consola (21 láminas) y sin console.log en el fuente', consoleErrors.length ? 'FAIL' : logs.length ? 'WARN' : 'PASS', [...consoleErrors, ...logs].join(' | '))
+  for (const f of readdirSync('src/directiva', { recursive: true }).map(String).filter((f) => statSync(join('src/directiva', f)).isFile())) readFileSync(join('src/directiva', f), 'utf8').split('\n').forEach((l, n) => { if (/console\.(log|debug|info)/.test(l)) logs.push(`src/directiva/${f}:${n + 1}`) })
+  add('2.3', `Cero errores de consola (${SLIDES.length} láminas) y sin console.log en el fuente`, consoleErrors.length ? 'FAIL' : logs.length ? 'WARN' : 'PASS', [...consoleErrors, ...logs].join(' | '))
   const html = readFileSync('dist/directiva/index.html', 'utf8')
   const assets = [...html.matchAll(/(?:src|href)="\/assets\/([^"]+)"/g)].map((m) => m[1])
   const sizes = assets.map((a) => ({ a, kb: Math.round(statSync(join('dist/assets', a)).size / 1024) }))
@@ -309,7 +309,7 @@ add('1.19', 'Email con mailto:', 'N/A', 'no se publica correo (regla de Tommy)')
     measured += r.length
     for (const it of r) if (it.ratio < it.need) low.push(`#/${hashOf(i)} "${it.t}" ${it.ratio}:1 (pide ${it.need})`)
   }
-  add('3.1', `Contraste AA medido (${measured} textos en 21 láminas y controles)`, measured === 0 ? 'NO SE PUDO' : low.length ? 'FAIL' : 'PASS', low.slice(0, 8).join(' | '))
+  add('3.1', `Contraste AA medido (${measured} textos en ${SLIDES.length} láminas y controles)`, measured === 0 ? 'NO SE PUDO' : low.length ? 'FAIL' : 'PASS', low.slice(0, 8).join(' | '))
   await ctx.close()
 }
 
@@ -336,7 +336,7 @@ add('1.19', 'Email con mailto:', 'N/A', 'no se publica correo (regla de Tommy)')
     const m = await page.evaluate(measureSlide)
     if (m.docScrollW > m.vw || m.cut.length || m.collisions.length) bad.push(`#/${hashOf(i)}: ${[...m.cut, ...m.collisions].slice(0, 2).join('; ') || 'scroll'}`)
   }
-  add('3.5', 'Teléfono girado 812×375 sin romper (21 láminas)', bad.length ? 'FAIL' : 'PASS', bad.join(' | '))
+  add('3.5', `Teléfono girado 812×375 sin romper (${SLIDES.length} láminas)`, bad.length ? 'FAIL' : 'PASS', bad.join(' | '))
   await ctx.close()
 }
 
@@ -399,6 +399,43 @@ add('1.19', 'Email con mailto:', 'N/A', 'no se publica correo (regla de Tommy)')
   for (const x of found) sig.push(x)
   add('3.7', 'Regla cero: las firmas medibles (terracota, verde ácido, violeta, emoji, blanco/negro planos, sombra única, tres tarjetas, fuente por inercia, radio 12 px)', sig.length ? 'FAIL' : 'PASS', sig.slice(0, 10).join(' | '))
   add('3.8', 'Regla cero: titular intercambiable (firma 10)', 'MANUAL', 'juicio de diseño: ver M-08 en el reporte')
+}
+
+// ——— Documento /directiva/curriculo/ ———
+{
+  const DOC = '/directiva/curriculo/'
+  const fails = []
+  const errs = []
+  for (const w of [320, 375, 414, 1366]) {
+    const { ctx, page, errors } = await pageAt(w, 800)
+    await page.goto(`${base}${DOC}`)
+    await page.waitForLoadState('networkidle')
+    await page.evaluate(() => document.fonts.ready)
+    const sw = await page.evaluate(() => document.documentElement.scrollWidth)
+    if (sw > w) fails.push(`${w}px: ${sw}>${w}`)
+    errs.push(...errors)
+    if (w === 1366) {
+      const title = await page.title()
+      const tl = [...title].length
+      add('D.1', 'Documento: título de 50 a 60 caracteres, marca al final', tl >= 50 && tl <= 60 && /IAE$/.test(title) ? 'PASS' : 'FAIL', `"${title}" (${tl})`)
+      const desc = await page.getAttribute('meta[name="description"]', 'content')
+      const dl = [...(desc ?? '')].length
+      add('D.2', 'Documento: meta description de 120 a 155 caracteres', dl >= 120 && dl <= 155 ? 'PASS' : 'FAIL', `${dl} caracteres`)
+      const h1 = await page.$$eval('h1', (hs) => hs.length)
+      const robots = await page.getAttribute('meta[name="robots"]', 'content')
+      const canonical = await page.getAttribute('link[rel="canonical"]', 'href')
+      add('D.3', 'Documento: un h1, noindex y canonical absoluto', h1 === 1 && /noindex/.test(robots ?? '') && canonical === `${PROD}${DOC}` ? 'PASS' : 'FAIL', `h1 ${h1} · robots "${robots}" · ${canonical}`)
+      const noAlt = await page.$$eval('img', (is) => is.filter((i) => !i.hasAttribute('alt')).length)
+      const counts = await page.evaluate(() => ({ s: document.querySelectorAll('table.sessions tbody tr').length, r: document.querySelectorAll('table.rubric').length, c: document.querySelectorAll('#club .unit').length }))
+      add('D.4', 'Documento: contenido completo (90 sesiones, 3 rúbricas, 6 clases del club) y alt en imágenes', counts.s === 90 && counts.r === 3 && counts.c === 6 && !noAlt ? 'PASS' : 'FAIL', `${counts.s} sesiones · ${counts.r} rúbricas · ${counts.c} clases · ${noAlt} imágenes sin alt`)
+      await page.keyboard.press('Tab')
+      const focus = await page.evaluate(() => { const cs = getComputedStyle(document.activeElement); return cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 2 })
+      add('D.5', 'Documento: foco de teclado visible', focus ? 'PASS' : 'FAIL')
+    }
+    await ctx.close()
+  }
+  add('D.6', 'Documento: cero scroll horizontal a 320, 375, 414 y 1366 px', fails.length ? 'FAIL' : 'PASS', fails.join(' | '))
+  add('D.7', 'Documento: cero errores de consola', errs.length ? 'FAIL' : 'PASS', errs.join(' | '))
 }
 
 await dctx.close()

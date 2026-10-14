@@ -58,3 +58,15 @@ Gana la Parte 3. Quedan anotados:
 - **Nombre de Tommy.** La Parte 3 pide "nada personal" pero también que la portada y el cierre lleven su nombre. Se usa solo el nombre y "candidato a presidente del Builders Club".
 - **Fondo de papel + serif display (regla cero, firma 1).** La Parte 3 pide papel tintado y Fraunces. Se evita la firma completa: no hay terracota, el acento es navy + bronce, y el papel lleva una cuadrícula de plano que le da identidad.
 - **Cuenta de Claude por estudiante.** La presentación `/` pide "una cuenta de Claude por estudiante". Los términos vigentes de Anthropic piden 18 años para cuentas personales. `/` no se toca (regla de la misión). En `/directiva/` el pedido se formula como "acceso supervisado a herramientas de IA aptas para su edad". Ver "Alerta para Tommy".
+
+## Segunda vuelta: currículo completo (14-oct-2026)
+
+Tommy pidió más detalle concreto: "un currículum completado", no un resumen. Decisiones:
+
+15. **Documento aparte para el detalle.** Una lámina no puede cargar 90 sesiones sin romper la legibilidad en el proyector, así que el detalle vive en `/directiva/curriculo/` (tercera entrada de Vite). Es un documento para leer, imprimir y entregar. La presentación lo enlaza desde los controles ("Currículo completo") y desde la lámina de cierre.
+16. **Una lámina por grado.** La tabla general de los tres años se reemplazó por tres láminas (8.º, 9.º y 10.º), cada una con sus tres unidades y su entregable. La presentación pasa de 14 a 16 láminas; el tiempo objetivo suma 14:30.
+17. **Apéndice ampliado:** rúbricas de 8.º, 9.º y 10.º (nivel Logrado de cada criterio), formación docente y el camino de un producto del club hasta el colegio. Las rúbricas del apéndice usan una letra de 30 unidades (≈ 18 pt): es material de consulta, no se proyecta en la exposición.
+18. **Supuestos del currículo, todos marcados "a confirmar":** un período semanal de 45 minutos dentro de Tecnología o Informática; tres trimestres de 10 semanas; ponderación de 20 % bitácoras, 30 % prácticas y 50 % entregable; tres talleres de formación docente.
+19. **Supuestos del club:** sesiones de 60 minutos; cupo inicial de 20 miembros; ciclos de seis semanas después del primer Demo Day; roles elegidos por los miembros.
+20. **Herramienta neutral.** El currículo habla de "la herramienta de IA que apruebe el colegio" y no nombra un producto, por los requisitos de edad de los proveedores (ver la alerta en `REPORTE-FINAL.md`).
+21. **Comillas tipográficas** (“ ”) en todo el texto: las comillas rectas se veían como ” ” con Space Grotesk.

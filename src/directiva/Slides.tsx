@@ -191,6 +191,17 @@ function Body({ slide, beat, mode }: ViewProps) {
 
     case 'table': {
       const shown = (r: number) => slide.beats.findIndex((b) => b.includes(r)) <= beat
+      const kind = ['octavo', 'noveno', 'decimo'].includes(slide.id) ? 'grade' : slide.columns[0] === 'Criterio' ? 'rubric' : slide.id === 'plan' ? 'plan' : 'default'
+      const widths: Record<string, (string | undefined)[]> = {
+        grade: ['13%', '33%', undefined],
+        rubric: ['24%', '10%', undefined],
+        plan: ['27%', '24%', undefined],
+        default: ['9%', '50%', undefined],
+      }
+      const cls = (c: number, last: boolean) =>
+        kind === 'grade' ? (c === 0 ? 't-sec strong serif tabular' : c === 1 ? 't-small strong' : 't-small')
+          : kind === 'rubric' ? (c === 0 ? 't-dense strong serif' : c === 1 ? 't-dense tabular muted' : 't-dense')
+            : c === 0 ? 't-sec strong serif' : last ? 't-small strong' : 't-small muted'
       return (
         <div className="slide-body" style={{ justifyContent: 'center', gap: gap(24, 16), paddingTop: gap(16, 16) }}>
           <table className="dx-table">
@@ -199,21 +210,22 @@ function Body({ slide, beat, mode }: ViewProps) {
             </thead>
             <tbody>
               {slide.rows.map((row, r) => (
-                <Beat key={row[0]} as="tr" show={shown(r)}>
+                <Beat key={row[0] + row[1]} as="tr" show={shown(r)}>
                   {row.map((cell, c) => (
                     <td
                       key={c}
                       data-k={c > 0 ? slide.columns[c] : undefined}
-                      className={c === 0 ? 't-sec strong serif' : c === row.length - 1 ? 't-small strong' : 't-small muted'}
-                      style={stage ? { width: c === 0 ? (slide.id === 'plan' ? '27%' : '9%') : c === 1 ? (slide.id === 'plan' ? '24%' : '50%') : undefined } : undefined}
+                      className={cls(c, c === row.length - 1)}
+                      style={stage ? { width: widths[kind][c] } : undefined}
                     >
-                      {cell}
+                      {kind === 'grade' && c === 0 ? <><span className="sr-only">Trimestre </span>T{cell}</> : cell}
                     </td>
                   ))}
                 </Beat>
               ))}
             </tbody>
           </table>
+          {slide.callout && <p className="t-sec strong" style={{ borderLeft: '4px solid var(--gold)', paddingLeft: gap(28, 16) }}>{slide.callout}</p>}
           {slide.footnote && <p className="t-foot">{slide.footnote}</p>}
         </div>
       )
@@ -400,6 +412,7 @@ function Body({ slide, beat, mode }: ViewProps) {
               <p className="t-body serif strong" style={{ marginTop: gap(8, 4) }}>{slide.firstStep.text}</p>
             </div>
           </Focal>
+          <p className="t-foot">{slide.more}</p>
         </div>
       )
 

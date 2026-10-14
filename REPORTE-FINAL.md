@@ -1,5 +1,34 @@
 # Reporte final · presentación para la directiva
 
+## Segunda vuelta (14-oct-2026): el currículo completo
+
+**Agregué el currículo completo y concreto, más un documento para entregar:**
+
+- **Documento `/directiva/curriculo/`:**
+  - 90 sesiones (30 por año, semana por semana, con lo que hace el alumno en cada una).
+  - La clase tipo de 45 minutos de cada año, un prompt de ejemplo por año y el entregable del año con su formato.
+  - Una rúbrica de cuatro niveles por año, el portafolio y la ponderación de la nota.
+  - Formación docente: tres talleres y una guía por unidad.
+  - El Builders Club clase por clase, con agenda minuto a minuto, cómo se evalúa el Demo Day, qué pasa después, cómo un producto llega a usarse en el colegio y las reglas de uso.
+  - Garantías, implementación con responsables, métricas y fuentes.
+- **Presentación:**
+  - Pasa de 14 a 16 láminas: una lámina por grado con sus tres unidades y su entregable. El tiempo objetivo queda en 14:30.
+  - El apéndice suma las tres rúbricas, la formación docente y el camino de un producto.
+  - Los controles tienen un botón "Currículo completo", y la lámina de cierre lleva la dirección del documento.
+- **Supuestos que tienes que confirmar:**
+  - Currículo: un período semanal de 45 minutos dentro de Tecnología; tres trimestres de 10 semanas; ponderación 20/30/50.
+  - Club: sesiones de 60 minutos y cupo inicial de 20.
+  - Detalle en `DECISIONES-DIRECTIVA.md`, puntos 15 a 21.
+- **Resultados:**
+  - `content-check` en PASS: ahora revisa también los 563 textos del currículo.
+  - Pruebas de `/directiva/`: 26 de 26 pasan, incluidas las nuevas del documento (5 tamaños y los enlaces entre presentación y documento).
+  - Launch-check: PASS 37 · WARN 2 · FAIL 0 · N/A 10 · NO SE PUDO 2 · MANUAL 1. "No se pudo": los links externos (red) y el 404 real.
+  - El CSS de `/` sigue idéntico byte a byte.
+
+Lo que sigue más abajo es el reporte de la primera vuelta. Donde dice 14 láminas, hoy son 16; los números de apéndice A3/A4 ahora son A8/A9.
+
+---
+
 **La presentación está construida, probada y en un PR en borrador: [tommyhanono/iae-propuestas-ia#1](https://github.com/tommyhanono/iae-propuestas-ia/pull/1), rama `directiva-2026`.** Son 14 láminas + 7 de apéndice en `/directiva/`. No mergeé ni desplegué a producción.
 
 Tres cosas quedan abiertas, cada una con su razón más abajo:

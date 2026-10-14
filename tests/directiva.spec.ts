@@ -31,7 +31,7 @@ async function open(page: Page, hash: string) {
 for (const vp of VIEWPORTS) {
   test.describe(`directiva @ ${vp.name}`, () => {
     test.use({ viewport: { width: vp.width, height: vp.height } })
-    test('las 21 láminas: sin scroll lateral, sin choques, sin texto cortado ni errores', async ({ page }) => {
+    test('todas las láminas: sin scroll lateral, sin choques, sin texto cortado ni errores', async ({ page }) => {
       const errors = watchErrors(page)
       for (const [i] of SLIDES.entries()) {
         await open(page, hashOf(i))
@@ -54,7 +54,7 @@ for (const vp of VIEWPORTS) {
           })
           expect(fits, `${where}: el final de la lámina no se alcanza con scroll`).toBe(true)
         }
-        if (['1', '3', '9', '10', '14'].includes(hashOf(i))) await page.screenshot({ path: `tests/screenshots/directiva-tests/${vp.name}-${hashOf(i)}.png` })
+        if (['1', '3', '5', '11', '12', String(MAIN_COUNT)].includes(hashOf(i))) await page.screenshot({ path: `tests/screenshots/directiva-tests/${vp.name}-${hashOf(i)}.png` })
       }
       expect(errors).toEqual([])
     })
@@ -64,7 +64,7 @@ for (const vp of VIEWPORTS) {
 test.describe('directiva · interacción 1366x768', () => {
   test.use({ viewport: { width: 1366, height: 768 } })
 
-  test('→ recorre beats y láminas hasta la 14 y se detiene; ← vuelve', async ({ page }) => {
+  test('→ recorre beats y láminas hasta la última principal y se detiene; ← vuelve', async ({ page }) => {
     const errors = watchErrors(page)
     await open(page, '1')
     let steps = 0
@@ -72,7 +72,7 @@ test.describe('directiva · interacción 1366x768', () => {
     for (let k = 1; k < steps; k++) await page.keyboard.press('ArrowRight')
     await page.waitForTimeout(400)
     expect(await index(page)).toBe(MAIN_COUNT - 1)
-    await expect(page).toHaveURL(/#\/14$/)
+    await expect(page).toHaveURL(new RegExp(`#/${MAIN_COUNT}$`))
     await page.keyboard.press('ArrowRight')
     expect(await index(page), 'no salta al apéndice con →').toBe(MAIN_COUNT - 1)
     await page.keyboard.press('Home')
@@ -151,7 +151,7 @@ test.describe('directiva · interacción 1366x768', () => {
     await page.keyboard.press('n')
     const notes = page.getByRole('complementary', { name: 'Notas del orador' })
     await expect(notes).toContainText(SLIDES[4].notes.slice(0, 40))
-    await expect(notes).toContainText('meta 1:15')
+    await expect(notes).toContainText(`meta ${SLIDES[4].time}`)
     await page.keyboard.press('n')
     await expect(notes).toBeHidden()
     await page.keyboard.press('t')
@@ -190,11 +190,11 @@ test.describe('directiva · interacción 1366x768', () => {
     await expect(page.getByRole('main')).toHaveCount(1)
     await expect(page.getByRole('navigation', { name: 'Controles de la presentación' })).toHaveCount(1)
     await page.keyboard.press('ArrowRight')
-    await expect(page.locator('[aria-live="polite"]')).toHaveText(`Lámina 2 de 14: ${SLIDES[1].title}`)
+    await expect(page.locator('[aria-live="polite"]')).toHaveText(`Lámina 2 de ${MAIN_COUNT}: ${SLIDES[1].title}`)
   })
 
   test('tarjeta SAT: en reserva, esqueleto borroso sin texto real y oculto a lectores', async ({ page }) => {
-    await open(page, '9')
+    await open(page, String(SLIDES.findIndex((sl) => sl.id === 'productos') + 1))
     const card = page.locator('.dx-viewport [data-locked="sat"]')
     await expect(card).toBeVisible()
     const sk = card.locator('.skeleton')
@@ -204,7 +204,7 @@ test.describe('directiva · interacción 1366x768', () => {
   })
 
   test('el cierre pide decisiones y no dice "Gracias"; nada de dinero en pantalla', async ({ page }) => {
-    await open(page, '14')
+    await open(page, String(MAIN_COUNT))
     const text = (await page.locator('.dx-viewport .slide').innerText()).toLowerCase()
     expect(text).toContain('primer paso')
     expect(text).not.toContain('gracias')
@@ -259,5 +259,36 @@ test.describe('directiva · móvil 375x812', () => {
     const small = await page.$$eval('button', (bs) => bs.filter((b) => { const r = b.getBoundingClientRect(); return r.width > 0 && (r.width < 44 || r.height < 44) }).map((b) => b.getAttribute('aria-label')))
     expect(small).toEqual([])
     await expect(page.locator('meta[name="viewport"]')).not.toHaveAttribute('content', /user-scalable=no|maximum-scale=1/)
+  })
+})
+
+test.describe('directiva · currículo completo', () => {
+  for (const vp of [{ w: 320, h: 640 }, { w: 375, h: 812 }, { w: 768, h: 1024 }, { w: 1366, h: 768 }, { w: 1920, h: 1080 }]) {
+    test(`documento @ ${vp.w}x${vp.h}: sin scroll lateral, 90 sesiones, 3 rúbricas, 6 clases del club y sin errores`, async ({ page }) => {
+      await page.setViewportSize({ width: vp.w, height: vp.h })
+      const errors = watchErrors(page)
+      await page.goto('/directiva/curriculo/')
+      await page.waitForLoadState('networkidle')
+      await page.evaluate(() => document.fonts.ready)
+      expect(await page.evaluate(() => document.documentElement.scrollWidth), 'scroll horizontal').toBeLessThanOrEqual(vp.w)
+      await expect(page.locator('h1')).toHaveCount(1)
+      await expect(page.locator('table.sessions tbody tr')).toHaveCount(90)
+      await expect(page.locator('table.rubric')).toHaveCount(3)
+      await expect(page.locator('#club .unit')).toHaveCount(6)
+      await expect(page.locator('html')).toHaveAttribute('lang', 'es')
+      const wide = await page.evaluate(() => [...document.querySelectorAll('main *')].filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.right > innerWidth + 1 && !e.closest('.rubric-wrap') }).map((e) => e.tagName + '.' + e.className).slice(0, 3))
+      expect(wide, 'elementos fuera del viewport').toEqual([])
+      if (vp.w === 375 || vp.w === 1366) await page.screenshot({ path: `tests/screenshots/directiva-tests/curriculo-${vp.w}.png`, fullPage: true })
+      expect(errors).toEqual([])
+    })
+  }
+
+  test('la presentación enlaza al documento y el documento vuelve a la presentación', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 768 })
+    await open(page, '1')
+    await page.getByRole('link', { name: /Currículo completo/ }).click()
+    await expect(page).toHaveURL(/\/directiva\/curriculo\/$/)
+    await page.getByRole('link', { name: 'Ver la presentación' }).click()
+    await expect(page).toHaveURL(/\/directiva\/(#.*)?$/)
   })
 })
